@@ -1,6 +1,8 @@
-# README
+# Convert variable, Translate text
 
-This is the README for your extension "text-format". After writing up a brief description, we recommend including the following sections.
+## Description
+
+Support for quickly converting variable writing style, converting text to variable writing style, translating selected text, ...
 
 ## Features
 
@@ -44,3 +46,6 @@ New versions
 
     - Updated KeyCommands
     - Updated Logic
+    - Fix error when selecting multiple lines
+
+#

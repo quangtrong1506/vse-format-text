@@ -5,6 +5,7 @@ import {
     cleanWhiteSpace,
     convertImport,
     removeVietnameseCharacters,
+    toCamelCase,
     toCapitalized,
     toConstantCase,
     toJSX,
@@ -12,6 +13,8 @@ import {
     toLowerCase,
     toPascalCase,
     toSnakeCase,
+    toUpperCase,
+    variableToString,
 } from './text.func';
 export const openSelect = () => {
     const QuickPick = vs.window.createQuickPick();
@@ -27,7 +30,7 @@ export const openSelect = () => {
 const handle = (id: string) => {
     const text = getTextAtSelections()?.[0];
     if (!text) return;
-    if (id === SelectIds.camelcase) insertTextAtSelections(text);
+    if (id === SelectIds.camelcase) insertTextAtSelections(toCamelCase(text));
     if (id === SelectIds.capitalize) insertTextAtSelections(toCapitalized(text));
     if (id === SelectIds.clear_double_whitespace) insertTextAtSelections(cleanWhiteSpace(text));
     if (id === SelectIds.dash) insertTextAtSelections(toKebabCase(text));
@@ -38,6 +41,7 @@ const handle = (id: string) => {
     if (id === SelectIds.pascalCase) insertTextAtSelections(toPascalCase(text));
     if (id === SelectIds.remove_vietnamese_characters) insertTextAtSelections(removeVietnameseCharacters(text));
     if (id === SelectIds.require_to_import) insertTextAtSelections(convertImport(text, 'require_to_import'));
+    if (id === SelectIds.to_text) insertTextAtSelections(variableToString(text));
     if (id === SelectIds.underscore) insertTextAtSelections(toSnakeCase(text));
-    if (id === SelectIds.uppercase) insertTextAtSelections(toLowerCase(text));
+    if (id === SelectIds.uppercase) insertTextAtSelections(toUpperCase(text));
 };

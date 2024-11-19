@@ -55,7 +55,7 @@ export const toCapitalized = (text: string): string => {
 export const convertImport = (text: string, type: 'require_to_import' | 'import_to_require') => {
     //Require to Import
     let result = '';
-    if (type === 'import_to_require') {
+    if (type === 'require_to_import') {
         let stringClone = cleanWhiteSpace(text.trim()).replace(';', '').replaceAll('"', "'");
         let arrS = stringClone.split(' ');
         if (arrS[3] && arrS[3].match(/\./))
@@ -65,7 +65,7 @@ export const convertImport = (text: string, type: 'require_to_import' | 'import_
         } else if (arrS.length == 1) {
             result = `import '${arrS[0].split("'")[1]}';`;
         }
-    } else if (type === 'require_to_import') {
+    } else if (type === 'import_to_require') {
         let stringClone = cleanWhiteSpace(text.trim()).replace(';', '').replaceAll('"', "'");
         let arrS = stringClone.split(' ');
         if (arrS[3] && arrS[3].match(/\./))

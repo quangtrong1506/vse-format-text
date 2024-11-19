@@ -9,160 +9,6 @@ module.exports = require("vscode");
 
 /***/ }),
 /* 2 */
-/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.translateAndInsert = void 0;
-const vs = __webpack_require__(1);
-const dist_1 = __webpack_require__(5);
-const constant_1 = __webpack_require__(3);
-const editor_1 = __webpack_require__(4);
-const translateAndInsert = () => __awaiter(void 0, void 0, void 0, function* () {
-    const data = (0, editor_1.getTextAtSelections)();
-    if (!data && (data === null || data === void 0 ? void 0 : data[0]) === '')
-        return;
-    const sourceLanguageQP = vs.window.createQuickPick();
-    sourceLanguageQP.placeholder = 'Select Source Language';
-    sourceLanguageQP.items = constant_1.SOURCE_LANGUAGE;
-    sourceLanguageQP.show();
-    sourceLanguageQP.onDidChangeSelection((item) => {
-        sourceLanguageQP.dispose();
-        const sl = item[0];
-        const targetLanguageQP = vs.window.createQuickPick();
-        targetLanguageQP.placeholder = 'Select Translate Language';
-        targetLanguageQP.items = constant_1.LANGUAGES;
-        targetLanguageQP.show();
-        targetLanguageQP.onDidChangeSelection((item) => __awaiter(void 0, void 0, void 0, function* () {
-            var _a;
-            const tl = item[0];
-            targetLanguageQP.dispose();
-            const translatedData = yield (0, dist_1.Translate)((_a = data === null || data === void 0 ? void 0 : data[0]) !== null && _a !== void 0 ? _a : '', sl.value, tl.value);
-            if (translatedData.result)
-                (0, editor_1.insertTextAtSelections)(translatedData.result);
-        }));
-    });
-});
-exports.translateAndInsert = translateAndInsert;
-
-
-/***/ }),
-/* 3 */
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.SOURCE_LANGUAGE = exports.LANGUAGES = void 0;
-exports.LANGUAGES = [
-    { value: 'af', label: 'Afrikaans' },
-    { value: 'am', label: 'Amharic' },
-    { value: 'ar', label: 'Arabic' },
-    { value: 'as', label: 'Assamese' },
-    { value: 'ay', label: 'Aymara' },
-    { value: 'az', label: 'Azerbaijani' },
-    { value: 'be', label: 'Belarusian' },
-    { value: 'bg', label: 'Bulgarian' },
-    { value: 'bn', label: 'Bengali' },
-    { value: 'bs', label: 'Bosnian' },
-    { value: 'ca', label: 'Catalan' },
-    { value: 'ceb', label: 'Cebuano' },
-    { value: 'co', label: 'Corsican' },
-    { value: 'cs', label: 'Czech' },
-    { value: 'cy', label: 'Welsh' },
-    { value: 'da', label: 'Danish' },
-    { value: 'de', label: 'German' },
-    { value: 'dv', label: 'Divehi' },
-    { value: 'el', label: 'Greek' },
-    { value: 'en', label: 'English' },
-    { value: 'eo', label: 'Esperanto' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'et', label: 'Estonian' },
-    { value: 'eu', label: 'Basque' },
-    { value: 'fa', label: 'Persian' },
-    { value: 'fi', label: 'Finnish' },
-    { value: 'fil', label: 'Filipino' },
-    { value: 'fo', label: 'Faroese' },
-    { value: 'fr', label: 'French' },
-    { value: 'fy', label: 'Frisian' },
-    { value: 'ga', label: 'Irish' },
-    { value: 'gl', label: 'Galician' },
-    { value: 'gn', label: 'Guarani' },
-    { value: 'gu', label: 'Gujarati' },
-    { value: 'ha', label: 'Hausa' },
-    { value: 'haw', label: 'Hawaiian' },
-    { value: 'hi', label: 'Hindi' },
-    { value: 'hr', label: 'Croatian' },
-    { value: 'ht', label: 'Haitian Creole' },
-    { value: 'hu', label: 'Hungarian' },
-    { value: 'hy', label: 'Armenian' },
-    { value: 'id', label: 'Indonesian' },
-    { value: 'ig', label: 'Igbo' },
-    { value: 'is', label: 'Icelandic' },
-    { value: 'it', label: 'Italian' },
-    { value: 'ja', label: 'Japanese' },
-    // { value: 'jw', label: 'Javanese' },
-    { value: 'ka', label: 'Georgian' },
-    { value: 'kk', label: 'Kazakh' },
-    { value: 'km', label: 'Khmer' },
-    { value: 'kn', label: 'Kannada' },
-    { value: 'ko', label: 'Korean' },
-    { value: 'la', label: 'Latin' },
-    { value: 'lv', label: 'Latvian' },
-    { value: 'mk', label: 'Macedonian' },
-    { value: 'ml', label: 'Malayalam' },
-    { value: 'mr', label: 'Marathi' },
-    { value: 'ms', label: 'Malay' },
-    { value: 'mt', label: 'Maltese' },
-    { value: 'my', label: 'Burmese' },
-    { value: 'ne', label: 'Nepali' },
-    { value: 'nl', label: 'Dutch' },
-    { value: 'no', label: 'Norwegian' },
-    { value: 'pl', label: 'Polish' },
-    { value: 'ps', label: 'Pashto' },
-    { value: 'pt', label: 'Portuguese' },
-    { value: 'ro', label: 'Romanian' },
-    { value: 'ru', label: 'Russian' },
-    { value: 'si', label: 'Sinhala' },
-    { value: 'sk', label: 'Slovak' },
-    { value: 'sl', label: 'Slovenian' },
-    { value: 'sr', label: 'Serbian' },
-    { value: 'su', label: 'Sundanese' },
-    { value: 'sv', label: 'Swedish' },
-    { value: 'sw', label: 'Swahili' },
-    { value: 'ta', label: 'Tamil' },
-    { value: 'te', label: 'Telugu' },
-    { value: 'th', label: 'Thai' },
-    { value: 'tr', label: 'Turkish' },
-    { value: 'uk', label: 'Ukrainian' },
-    { value: 'ur', label: 'Urdu' },
-    { value: 'vi', label: 'Vietnamese' },
-    // { value: 'wa', label: 'Walloon' },
-    { value: 'xh', label: 'Xhosa' },
-    { value: 'yi', label: 'Yiddish' },
-    { value: 'zu', label: 'Zulu' },
-];
-exports.SOURCE_LANGUAGE = [
-    {
-        label: 'Auto',
-        value: 'auto',
-    },
-    ...exports.LANGUAGES,
-];
-
-
-/***/ }),
-/* 4 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -204,54 +50,7 @@ exports.insertTextAtSelections = insertTextAtSelections;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(__unused_webpack_module, exports) {
-
-"use strict";
-
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.Translate = void 0;
-const Translate = (text, sourceLanguage, translateLanguage) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    const result = {
-        text,
-        result: '',
-        sourceLanguage: sourceLanguage,
-        translateLanguage: translateLanguage,
-    };
-    try {
-        const res = yield fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${translateLanguage}&dt=t&q=${text}`, {
-            method: 'GET',
-            redirect: 'follow',
-        });
-        if (res.ok) {
-            const data = yield res.json();
-            result.result = ((_b = (_a = data === null || data === void 0 ? void 0 : data[0]) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b[0]) || '';
-        }
-        return result;
-    }
-    catch (error) {
-        result.errors = {
-            message: 'Error: ' + (error === null || error === void 0 ? void 0 : error.message),
-            code: -1,
-        };
-        return result;
-    }
-});
-exports.Translate = Translate;
-
-
-/***/ }),
-/* 6 */
+/* 3 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -259,9 +58,9 @@ exports.Translate = Translate;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.openSelect = void 0;
 const vs = __webpack_require__(1);
-const constant_1 = __webpack_require__(7);
-const editor_1 = __webpack_require__(4);
-const text_func_1 = __webpack_require__(8);
+const constant_1 = __webpack_require__(4);
+const editor_1 = __webpack_require__(2);
+const text_func_1 = __webpack_require__(5);
 const openSelect = () => {
     const QuickPick = vs.window.createQuickPick();
     QuickPick.items = constant_1.SELECTS;
@@ -279,7 +78,7 @@ const handle = (id) => {
     if (!text)
         return;
     if (id === constant_1.SelectIds.camelcase)
-        (0, editor_1.insertTextAtSelections)(text);
+        (0, editor_1.insertTextAtSelections)((0, text_func_1.toCamelCase)(text));
     if (id === constant_1.SelectIds.capitalize)
         (0, editor_1.insertTextAtSelections)((0, text_func_1.toCapitalized)(text));
     if (id === constant_1.SelectIds.clear_double_whitespace)
@@ -300,15 +99,17 @@ const handle = (id) => {
         (0, editor_1.insertTextAtSelections)((0, text_func_1.removeVietnameseCharacters)(text));
     if (id === constant_1.SelectIds.require_to_import)
         (0, editor_1.insertTextAtSelections)((0, text_func_1.convertImport)(text, 'require_to_import'));
+    if (id === constant_1.SelectIds.to_text)
+        (0, editor_1.insertTextAtSelections)((0, text_func_1.variableToString)(text));
     if (id === constant_1.SelectIds.underscore)
         (0, editor_1.insertTextAtSelections)((0, text_func_1.toSnakeCase)(text));
     if (id === constant_1.SelectIds.uppercase)
-        (0, editor_1.insertTextAtSelections)((0, text_func_1.toLowerCase)(text));
+        (0, editor_1.insertTextAtSelections)((0, text_func_1.toUpperCase)(text));
 };
 
 
 /***/ }),
-/* 7 */
+/* 4 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -394,14 +195,14 @@ exports.SELECTS = [
 
 
 /***/ }),
-/* 8 */
+/* 5 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.addConsole = exports.toJSX = exports.toKebabCase = exports.toConstantCase = exports.toSnakeCase = exports.toPascalCase = exports.toCamelCase = exports.convertImport = exports.toCapitalized = exports.toLowerCase = exports.toUpperCase = exports.cleanWhiteSpace = exports.variableToString = exports.removeVietnameseCharacters = void 0;
-const dist_1 = __webpack_require__(9);
+const dist_1 = __webpack_require__(6);
 const removeVietnameseCharacters = (str, delete_special_characters = false) => {
     // remove accents
     var from = 'àáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîöüûñçýỳỹỵỷÀÁÃẢẠĂẰẮẲẴẶÂẦẤẨẪẬÈÉẺẼẸÊỀẾỂỄỆĐÙÚỦŨỤƯỪỨỬỮỰÒÓỎÕỌÔỒỐỔỖỘƠỜỚỞỠỢÌÍỈĨỊÄËÏÎÖÜÛÑÇÝỲỸỴỶ', to = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiouuncyyyyyAAAAAAAAAAAAAAAAAEEEEEEEEEEEDUUUUUUUUUUUOOOOOOOOOOOOOOOOOIIIIIAEIIOUUNCYYYYY';
@@ -451,7 +252,7 @@ exports.toCapitalized = toCapitalized;
 const convertImport = (text, type) => {
     //Require to Import
     let result = '';
-    if (type === 'import_to_require') {
+    if (type === 'require_to_import') {
         let stringClone = (0, exports.cleanWhiteSpace)(text.trim()).replace(';', '').replaceAll('"', "'");
         let arrS = stringClone.split(' ');
         if (arrS[3] && arrS[3].match(/\./))
@@ -463,7 +264,7 @@ const convertImport = (text, type) => {
             result = `import '${arrS[0].split("'")[1]}';`;
         }
     }
-    else if (type === 'require_to_import') {
+    else if (type === 'import_to_require') {
         let stringClone = (0, exports.cleanWhiteSpace)(text.trim()).replace(';', '').replaceAll('"', "'");
         let arrS = stringClone.split(' ');
         if (arrS[3] && arrS[3].match(/\./))
@@ -524,19 +325,19 @@ exports.addConsole = addConsole;
 
 
 /***/ }),
-/* 9 */
+/* 6 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.htmlToJsx = void 0;
-var html_to_jsx_1 = __webpack_require__(10);
+var html_to_jsx_1 = __webpack_require__(7);
 Object.defineProperty(exports, "htmlToJsx", ({ enumerable: true, get: function () { return html_to_jsx_1.htmlToJsx; } }));
 
 
 /***/ }),
-/* 10 */
+/* 7 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -546,12 +347,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.htmlToJsx = void 0;
-const generator_1 = __importDefault(__webpack_require__(11));
-const types_1 = __webpack_require__(22);
-const parse5_1 = __webpack_require__(124);
-const html_entities_1 = __webpack_require__(143);
-const convert_attributes_1 = __webpack_require__(147);
-const split_merge_tags_1 = __webpack_require__(152);
+const generator_1 = __importDefault(__webpack_require__(8));
+const types_1 = __webpack_require__(19);
+const parse5_1 = __webpack_require__(121);
+const html_entities_1 = __webpack_require__(140);
+const convert_attributes_1 = __webpack_require__(144);
+const split_merge_tags_1 = __webpack_require__(149);
 function htmlToJsx(html) {
     const htmlAst = (0, parse5_1.parseFragment)(html.trim());
     let babelAst;
@@ -669,7 +470,7 @@ function isDocumentType(node) {
 
 
 /***/ }),
-/* 11 */
+/* 8 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -679,8 +480,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = generate;
-var _sourceMap = __webpack_require__(12);
-var _printer = __webpack_require__(18);
+var _sourceMap = __webpack_require__(9);
+var _printer = __webpack_require__(15);
 function normalizeOptions(code, opts, ast) {
   if (opts.experimental_preserveFormat) {
     if (typeof code !== "string") {
@@ -786,7 +587,7 @@ function generate(ast, opts = {}, code) {
 
 
 /***/ }),
-/* 12 */
+/* 9 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -796,8 +597,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _genMapping = __webpack_require__(13);
-var _traceMapping = __webpack_require__(16);
+var _genMapping = __webpack_require__(10);
+var _traceMapping = __webpack_require__(13);
 class SourceMap {
   constructor(opts, code) {
     var _opts$sourceFileName;
@@ -878,11 +679,11 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 13 */
+/* 10 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 (function (global, factory) {
-     true ? factory(exports, __webpack_require__(14), __webpack_require__(15), __webpack_require__(16)) :
+     true ? factory(exports, __webpack_require__(11), __webpack_require__(12), __webpack_require__(13)) :
     0;
 })(this, (function (exports, setArray, sourcemapCodec, traceMapping) { 'use strict';
 
@@ -1129,7 +930,7 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 14 */
+/* 11 */
 /***/ (function(__unused_webpack_module, exports) {
 
 (function (global, factory) {
@@ -1217,7 +1018,7 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 15 */
+/* 12 */
 /***/ (function(__unused_webpack_module, exports) {
 
 (function (global, factory) {
@@ -1661,11 +1462,11 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 16 */
+/* 13 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 (function (global, factory) {
-     true ? factory(exports, __webpack_require__(15), __webpack_require__(17)) :
+     true ? factory(exports, __webpack_require__(12), __webpack_require__(14)) :
     0;
 })(this, (function (exports, sourcemapCodec, resolveUri) { 'use strict';
 
@@ -2266,7 +2067,7 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 17 */
+/* 14 */
 /***/ (function(module) {
 
 (function (global, factory) {
@@ -2511,7 +2312,7 @@ exports["default"] = SourceMap;
 
 
 /***/ }),
-/* 18 */
+/* 15 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -2521,11 +2322,11 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _buffer = __webpack_require__(19);
-var n = __webpack_require__(20);
-var _t = __webpack_require__(22);
-var _tokenMap = __webpack_require__(110);
-var generatorFunctions = __webpack_require__(111);
+var _buffer = __webpack_require__(16);
+var n = __webpack_require__(17);
+var _t = __webpack_require__(19);
+var _tokenMap = __webpack_require__(107);
+var generatorFunctions = __webpack_require__(108);
 const {
   isExpression,
   isFunction,
@@ -3274,7 +3075,7 @@ function commaSeparator(occurrenceCount, last) {
 
 
 /***/ }),
-/* 19 */
+/* 16 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -3598,7 +3399,7 @@ exports["default"] = Buffer;
 
 
 /***/ }),
-/* 20 */
+/* 17 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3613,9 +3414,9 @@ exports.needsParens = needsParens;
 exports.needsWhitespace = needsWhitespace;
 exports.needsWhitespaceAfter = needsWhitespaceAfter;
 exports.needsWhitespaceBefore = needsWhitespaceBefore;
-var whitespace = __webpack_require__(21);
-var parens = __webpack_require__(109);
-var _t = __webpack_require__(22);
+var whitespace = __webpack_require__(18);
+var parens = __webpack_require__(106);
+var _t = __webpack_require__(19);
 const {
   FLIPPED_ALIAS_KEYS,
   VISITOR_KEYS,
@@ -3724,7 +3525,7 @@ function isLastChild(parent, child) {
 
 
 /***/ }),
-/* 21 */
+/* 18 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -3734,7 +3535,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.nodes = void 0;
-var _t = __webpack_require__(22);
+var _t = __webpack_require__(19);
 const {
   FLIPPED_ALIAS_KEYS,
   isArrayExpression,
@@ -3876,7 +3677,7 @@ nodes.ObjectTypeInternalSlot = function (node, parent) {
 
 
 /***/ }),
-/* 22 */
+/* 19 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4295,11 +4096,11 @@ Object.defineProperty(exports, "valueToNode", ({
     return _valueToNode.default;
   }
 }));
-var _isReactComponent = __webpack_require__(23);
-var _isCompatTag = __webpack_require__(29);
-var _buildChildren = __webpack_require__(30);
-var _assertNode = __webpack_require__(53);
-var _index = __webpack_require__(55);
+var _isReactComponent = __webpack_require__(20);
+var _isCompatTag = __webpack_require__(26);
+var _buildChildren = __webpack_require__(27);
+var _assertNode = __webpack_require__(50);
+var _index = __webpack_require__(52);
 Object.keys(_index).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4311,10 +4112,10 @@ Object.keys(_index).forEach(function (key) {
     }
   });
 });
-var _createTypeAnnotationBasedOnTypeof = __webpack_require__(56);
-var _createFlowUnionType = __webpack_require__(57);
-var _createTSUnionType = __webpack_require__(59);
-var _index2 = __webpack_require__(32);
+var _createTypeAnnotationBasedOnTypeof = __webpack_require__(53);
+var _createFlowUnionType = __webpack_require__(54);
+var _createTSUnionType = __webpack_require__(56);
+var _index2 = __webpack_require__(29);
 Object.keys(_index2).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4326,7 +4127,7 @@ Object.keys(_index2).forEach(function (key) {
     }
   });
 });
-var _uppercase = __webpack_require__(61);
+var _uppercase = __webpack_require__(58);
 Object.keys(_uppercase).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4338,7 +4139,7 @@ Object.keys(_uppercase).forEach(function (key) {
     }
   });
 });
-var _productions = __webpack_require__(62);
+var _productions = __webpack_require__(59);
 Object.keys(_productions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4350,19 +4151,19 @@ Object.keys(_productions).forEach(function (key) {
     }
   });
 });
-var _cloneNode = __webpack_require__(63);
-var _clone = __webpack_require__(64);
-var _cloneDeep = __webpack_require__(65);
-var _cloneDeepWithoutLoc = __webpack_require__(66);
-var _cloneWithoutLoc = __webpack_require__(67);
-var _addComment = __webpack_require__(68);
-var _addComments = __webpack_require__(69);
-var _inheritInnerComments = __webpack_require__(70);
-var _inheritLeadingComments = __webpack_require__(72);
-var _inheritsComments = __webpack_require__(73);
-var _inheritTrailingComments = __webpack_require__(74);
-var _removeComments = __webpack_require__(75);
-var _index3 = __webpack_require__(76);
+var _cloneNode = __webpack_require__(60);
+var _clone = __webpack_require__(61);
+var _cloneDeep = __webpack_require__(62);
+var _cloneDeepWithoutLoc = __webpack_require__(63);
+var _cloneWithoutLoc = __webpack_require__(64);
+var _addComment = __webpack_require__(65);
+var _addComments = __webpack_require__(66);
+var _inheritInnerComments = __webpack_require__(67);
+var _inheritLeadingComments = __webpack_require__(69);
+var _inheritsComments = __webpack_require__(70);
+var _inheritTrailingComments = __webpack_require__(71);
+var _removeComments = __webpack_require__(72);
+var _index3 = __webpack_require__(73);
 Object.keys(_index3).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4374,7 +4175,7 @@ Object.keys(_index3).forEach(function (key) {
     }
   });
 });
-var _index4 = __webpack_require__(44);
+var _index4 = __webpack_require__(41);
 Object.keys(_index4).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4386,16 +4187,16 @@ Object.keys(_index4).forEach(function (key) {
     }
   });
 });
-var _ensureBlock = __webpack_require__(77);
-var _toBindingIdentifierName = __webpack_require__(79);
-var _toBlock = __webpack_require__(78);
-var _toComputedKey = __webpack_require__(81);
-var _toExpression = __webpack_require__(82);
-var _toIdentifier = __webpack_require__(80);
-var _toKeyAlias = __webpack_require__(83);
-var _toStatement = __webpack_require__(87);
-var _valueToNode = __webpack_require__(88);
-var _index5 = __webpack_require__(34);
+var _ensureBlock = __webpack_require__(74);
+var _toBindingIdentifierName = __webpack_require__(76);
+var _toBlock = __webpack_require__(75);
+var _toComputedKey = __webpack_require__(78);
+var _toExpression = __webpack_require__(79);
+var _toIdentifier = __webpack_require__(77);
+var _toKeyAlias = __webpack_require__(80);
+var _toStatement = __webpack_require__(84);
+var _valueToNode = __webpack_require__(85);
+var _index5 = __webpack_require__(31);
 Object.keys(_index5).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4407,17 +4208,17 @@ Object.keys(_index5).forEach(function (key) {
     }
   });
 });
-var _appendToMemberExpression = __webpack_require__(89);
-var _inherits = __webpack_require__(90);
-var _prependToMemberExpression = __webpack_require__(91);
-var _removeProperties = __webpack_require__(86);
-var _removePropertiesDeep = __webpack_require__(84);
-var _removeTypeDuplicates = __webpack_require__(58);
-var _getAssignmentIdentifiers = __webpack_require__(92);
-var _getBindingIdentifiers = __webpack_require__(93);
-var _getOuterBindingIdentifiers = __webpack_require__(94);
-var _getFunctionName = __webpack_require__(95);
-var _traverse = __webpack_require__(96);
+var _appendToMemberExpression = __webpack_require__(86);
+var _inherits = __webpack_require__(87);
+var _prependToMemberExpression = __webpack_require__(88);
+var _removeProperties = __webpack_require__(83);
+var _removePropertiesDeep = __webpack_require__(81);
+var _removeTypeDuplicates = __webpack_require__(55);
+var _getAssignmentIdentifiers = __webpack_require__(89);
+var _getBindingIdentifiers = __webpack_require__(90);
+var _getOuterBindingIdentifiers = __webpack_require__(91);
+var _getFunctionName = __webpack_require__(92);
+var _traverse = __webpack_require__(93);
 Object.keys(_traverse).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4429,27 +4230,27 @@ Object.keys(_traverse).forEach(function (key) {
     }
   });
 });
-var _traverseFast = __webpack_require__(85);
-var _shallowEqual = __webpack_require__(27);
-var _is = __webpack_require__(36);
-var _isBinding = __webpack_require__(97);
-var _isBlockScoped = __webpack_require__(98);
-var _isImmutable = __webpack_require__(100);
-var _isLet = __webpack_require__(99);
-var _isNode = __webpack_require__(54);
-var _isNodesEquivalent = __webpack_require__(101);
-var _isPlaceholderType = __webpack_require__(38);
-var _isReferenced = __webpack_require__(102);
-var _isScope = __webpack_require__(103);
-var _isSpecifierDefault = __webpack_require__(104);
-var _isType = __webpack_require__(37);
-var _isValidES3Identifier = __webpack_require__(105);
-var _isValidIdentifier = __webpack_require__(39);
-var _isVar = __webpack_require__(106);
-var _matchesPattern = __webpack_require__(25);
-var _validate = __webpack_require__(33);
-var _buildMatchMemberExpression = __webpack_require__(24);
-var _index6 = __webpack_require__(26);
+var _traverseFast = __webpack_require__(82);
+var _shallowEqual = __webpack_require__(24);
+var _is = __webpack_require__(33);
+var _isBinding = __webpack_require__(94);
+var _isBlockScoped = __webpack_require__(95);
+var _isImmutable = __webpack_require__(97);
+var _isLet = __webpack_require__(96);
+var _isNode = __webpack_require__(51);
+var _isNodesEquivalent = __webpack_require__(98);
+var _isPlaceholderType = __webpack_require__(35);
+var _isReferenced = __webpack_require__(99);
+var _isScope = __webpack_require__(100);
+var _isSpecifierDefault = __webpack_require__(101);
+var _isType = __webpack_require__(34);
+var _isValidES3Identifier = __webpack_require__(102);
+var _isValidIdentifier = __webpack_require__(36);
+var _isVar = __webpack_require__(103);
+var _matchesPattern = __webpack_require__(22);
+var _validate = __webpack_require__(30);
+var _buildMatchMemberExpression = __webpack_require__(21);
+var _index6 = __webpack_require__(23);
 Object.keys(_index6).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
@@ -4461,14 +4262,14 @@ Object.keys(_index6).forEach(function (key) {
     }
   });
 });
-var _deprecationWarning = __webpack_require__(28);
+var _deprecationWarning = __webpack_require__(25);
 const react = exports.react = {
   isReactComponent: _isReactComponent.default,
   isCompatTag: _isCompatTag.default,
   buildChildren: _buildChildren.default
 };
 {
-  exports.toSequenceExpression = __webpack_require__(107)["default"];
+  exports.toSequenceExpression = __webpack_require__(104)["default"];
 }
 if (process.env.BABEL_TYPES_8_BREAKING) {
   console.warn("BABEL_TYPES_8_BREAKING is not supported anymore. Use the latest Babel 8.0.0 pre-release instead!");
@@ -4478,7 +4279,7 @@ if (process.env.BABEL_TYPES_8_BREAKING) {
 
 
 /***/ }),
-/* 23 */
+/* 20 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4488,7 +4289,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _buildMatchMemberExpression = __webpack_require__(24);
+var _buildMatchMemberExpression = __webpack_require__(21);
 const isReactComponent = (0, _buildMatchMemberExpression.default)("React.Component");
 var _default = exports["default"] = isReactComponent;
 
@@ -4496,7 +4297,7 @@ var _default = exports["default"] = isReactComponent;
 
 
 /***/ }),
-/* 24 */
+/* 21 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4506,7 +4307,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = buildMatchMemberExpression;
-var _matchesPattern = __webpack_require__(25);
+var _matchesPattern = __webpack_require__(22);
 function buildMatchMemberExpression(match, allowPartial) {
   const parts = match.split(".");
   return member => (0, _matchesPattern.default)(member, parts, allowPartial);
@@ -4516,7 +4317,7 @@ function buildMatchMemberExpression(match, allowPartial) {
 
 
 /***/ }),
-/* 25 */
+/* 22 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4526,7 +4327,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = matchesPattern;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function matchesPattern(member, match, allowPartial) {
   if (!(0, _index.isMemberExpression)(member)) return false;
   const parts = Array.isArray(match) ? match : match.split(".");
@@ -4559,7 +4360,7 @@ function matchesPattern(member, match, allowPartial) {
 
 
 /***/ }),
-/* 26 */
+/* 23 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -4872,8 +4673,8 @@ exports.isWhile = isWhile;
 exports.isWhileStatement = isWhileStatement;
 exports.isWithStatement = isWithStatement;
 exports.isYieldExpression = isYieldExpression;
-var _shallowEqual = __webpack_require__(27);
-var _deprecationWarning = __webpack_require__(28);
+var _shallowEqual = __webpack_require__(24);
+var _deprecationWarning = __webpack_require__(25);
 function isArrayExpression(node, opts) {
   if (!node) return false;
   if (node.type !== "ArrayExpression") return false;
@@ -7318,7 +7119,7 @@ function isModuleDeclaration(node, opts) {
 
 
 /***/ }),
-/* 27 */
+/* 24 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7342,7 +7143,7 @@ function shallowEqual(actual, expected) {
 
 
 /***/ }),
-/* 28 */
+/* 25 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7393,7 +7194,7 @@ function captureShortStackTrace(skip, length) {
 
 
 /***/ }),
-/* 29 */
+/* 26 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -7411,7 +7212,7 @@ function isCompatTag(tagName) {
 
 
 /***/ }),
-/* 30 */
+/* 27 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7421,8 +7222,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = buildChildren;
-var _index = __webpack_require__(26);
-var _cleanJSXElementLiteralChild = __webpack_require__(31);
+var _index = __webpack_require__(23);
+var _cleanJSXElementLiteralChild = __webpack_require__(28);
 function buildChildren(node) {
   const elements = [];
   for (let i = 0; i < node.children.length; i++) {
@@ -7442,7 +7243,7 @@ function buildChildren(node) {
 
 
 /***/ }),
-/* 31 */
+/* 28 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7452,8 +7253,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = cleanJSXElementLiteralChild;
-var _index = __webpack_require__(32);
-var _index2 = __webpack_require__(22);
+var _index = __webpack_require__(29);
+var _index2 = __webpack_require__(19);
 function cleanJSXElementLiteralChild(child, args) {
   const lines = child.value.split(/\r\n|\n|\r/);
   let lastNonEmptyLine = 0;
@@ -7489,7 +7290,7 @@ function cleanJSXElementLiteralChild(child, args) {
 
 
 /***/ }),
-/* 32 */
+/* 29 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -7752,9 +7553,9 @@ exports.voidTypeAnnotation = voidTypeAnnotation;
 exports.whileStatement = whileStatement;
 exports.withStatement = withStatement;
 exports.yieldExpression = yieldExpression;
-var _validate = __webpack_require__(33);
-var _deprecationWarning = __webpack_require__(28);
-var utils = __webpack_require__(45);
+var _validate = __webpack_require__(30);
+var _deprecationWarning = __webpack_require__(25);
+var utils = __webpack_require__(42);
 const {
   validateInternal: validate
 } = _validate;
@@ -10361,7 +10162,7 @@ function SpreadProperty(argument) {
 
 
 /***/ }),
-/* 33 */
+/* 30 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -10374,7 +10175,7 @@ exports["default"] = validate;
 exports.validateChild = validateChild;
 exports.validateField = validateField;
 exports.validateInternal = validateInternal;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function validate(node, key, val) {
   if (!node) return;
   const fields = _index.NODE_FIELDS[node.type];
@@ -10410,7 +10211,7 @@ function validateChild(node, key, val) {
 
 
 /***/ }),
-/* 34 */
+/* 31 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -10486,15 +10287,15 @@ Object.defineProperty(exports, "VISITOR_KEYS", ({
     return _utils.VISITOR_KEYS;
   }
 }));
-__webpack_require__(35);
-__webpack_require__(46);
+__webpack_require__(32);
+__webpack_require__(43);
+__webpack_require__(44);
+__webpack_require__(45);
 __webpack_require__(47);
 __webpack_require__(48);
-__webpack_require__(50);
-__webpack_require__(51);
-var _utils = __webpack_require__(45);
-var _placeholders = __webpack_require__(49);
-var _deprecatedAliases = __webpack_require__(52);
+var _utils = __webpack_require__(42);
+var _placeholders = __webpack_require__(46);
+var _deprecatedAliases = __webpack_require__(49);
 Object.keys(_deprecatedAliases.DEPRECATED_ALIASES).forEach(deprecatedAlias => {
   _utils.FLIPPED_ALIAS_KEYS[deprecatedAlias] = _utils.FLIPPED_ALIAS_KEYS[_deprecatedAliases.DEPRECATED_ALIASES[deprecatedAlias]];
 });
@@ -10504,7 +10305,7 @@ const TYPES = exports.TYPES = [].concat(Object.keys(_utils.VISITOR_KEYS), Object
 
 
 /***/ }),
-/* 35 */
+/* 32 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -10514,12 +10315,12 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.patternLikeCommon = exports.importAttributes = exports.functionTypeAnnotationCommon = exports.functionDeclarationCommon = exports.functionCommon = exports.classMethodOrPropertyCommon = exports.classMethodOrDeclareMethodCommon = void 0;
-var _is = __webpack_require__(36);
-var _isValidIdentifier = __webpack_require__(39);
-var _helperValidatorIdentifier = __webpack_require__(40);
-var _helperStringParser = __webpack_require__(43);
-var _index = __webpack_require__(44);
-var _utils = __webpack_require__(45);
+var _is = __webpack_require__(33);
+var _isValidIdentifier = __webpack_require__(36);
+var _helperValidatorIdentifier = __webpack_require__(37);
+var _helperStringParser = __webpack_require__(40);
+var _index = __webpack_require__(41);
+var _utils = __webpack_require__(42);
 const defineType = (0, _utils.defineAliasedType)("Standardized");
 defineType("ArrayExpression", {
   fields: {
@@ -12141,7 +11942,7 @@ defineType("StaticBlock", {
 
 
 /***/ }),
-/* 36 */
+/* 33 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12151,10 +11952,10 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = is;
-var _shallowEqual = __webpack_require__(27);
-var _isType = __webpack_require__(37);
-var _isPlaceholderType = __webpack_require__(38);
-var _index = __webpack_require__(34);
+var _shallowEqual = __webpack_require__(24);
+var _isType = __webpack_require__(34);
+var _isPlaceholderType = __webpack_require__(35);
+var _index = __webpack_require__(31);
 function is(type, node, opts) {
   if (!node) return false;
   const matches = (0, _isType.default)(node.type, type);
@@ -12175,7 +11976,7 @@ function is(type, node, opts) {
 
 
 /***/ }),
-/* 37 */
+/* 34 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12185,7 +11986,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isType;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function isType(nodeType, targetType) {
   if (nodeType === targetType) return true;
   if (nodeType == null) return false;
@@ -12204,7 +12005,7 @@ function isType(nodeType, targetType) {
 
 
 /***/ }),
-/* 38 */
+/* 35 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12214,7 +12015,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isPlaceholderType;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function isPlaceholderType(placeholderType, targetType) {
   if (placeholderType === targetType) return true;
   const aliases = _index.PLACEHOLDERS_ALIAS[placeholderType];
@@ -12230,7 +12031,7 @@ function isPlaceholderType(placeholderType, targetType) {
 
 
 /***/ }),
-/* 39 */
+/* 36 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12240,7 +12041,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isValidIdentifier;
-var _helperValidatorIdentifier = __webpack_require__(40);
+var _helperValidatorIdentifier = __webpack_require__(37);
 function isValidIdentifier(name, reserved = true) {
   if (typeof name !== "string") return false;
   if (reserved) {
@@ -12255,7 +12056,7 @@ function isValidIdentifier(name, reserved = true) {
 
 
 /***/ }),
-/* 40 */
+/* 37 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12312,14 +12113,14 @@ Object.defineProperty(exports, "isStrictReservedWord", ({
     return _keyword.isStrictReservedWord;
   }
 }));
-var _identifier = __webpack_require__(41);
-var _keyword = __webpack_require__(42);
+var _identifier = __webpack_require__(38);
+var _keyword = __webpack_require__(39);
 
 //# sourceMappingURL=index.js.map
 
 
 /***/ }),
-/* 41 */
+/* 38 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -12396,7 +12197,7 @@ function isIdentifierName(name) {
 
 
 /***/ }),
-/* 42 */
+/* 39 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -12438,7 +12239,7 @@ function isKeyword(word) {
 
 
 /***/ }),
-/* 43 */
+/* 40 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -12740,7 +12541,7 @@ function readCodePoint(input, pos, lineStart, curLine, throwOnInvalid, errors) {
 
 
 /***/ }),
-/* 44 */
+/* 41 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -12778,7 +12579,7 @@ const NOT_LOCAL_BINDING = exports.NOT_LOCAL_BINDING = Symbol.for("should not be 
 
 
 /***/ }),
-/* 45 */
+/* 42 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -12805,8 +12606,8 @@ exports.validateArrayOfType = validateArrayOfType;
 exports.validateOptional = validateOptional;
 exports.validateOptionalType = validateOptionalType;
 exports.validateType = validateType;
-var _is = __webpack_require__(36);
-var _validate = __webpack_require__(33);
+var _is = __webpack_require__(33);
+var _validate = __webpack_require__(30);
 const VISITOR_KEYS = exports.VISITOR_KEYS = {};
 const ALIAS_KEYS = exports.ALIAS_KEYS = {};
 const FLIPPED_ALIAS_KEYS = exports.FLIPPED_ALIAS_KEYS = {};
@@ -13055,14 +12856,14 @@ function defineType(type, opts = {}) {
 
 
 /***/ }),
-/* 46 */
+/* 43 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _core = __webpack_require__(35);
-var _utils = __webpack_require__(45);
+var _core = __webpack_require__(32);
+var _utils = __webpack_require__(42);
 const defineType = (0, _utils.defineAliasedType)("Flow");
 const defineInterfaceishType = name => {
   const isDeclareClass = name === "DeclareClass";
@@ -13554,13 +13355,13 @@ defineType("OptionalIndexedAccessType", {
 
 
 /***/ }),
-/* 47 */
+/* 44 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _utils = __webpack_require__(45);
+var _utils = __webpack_require__(42);
 const defineType = (0, _utils.defineAliasedType)("JSX");
 defineType("JSXAttribute", {
   visitor: ["name", "value"],
@@ -13713,15 +13514,15 @@ defineType("JSXClosingFragment", {
 
 
 /***/ }),
-/* 48 */
+/* 45 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _utils = __webpack_require__(45);
-var _placeholders = __webpack_require__(49);
-var _core = __webpack_require__(35);
+var _utils = __webpack_require__(42);
+var _placeholders = __webpack_require__(46);
+var _core = __webpack_require__(32);
 const defineType = (0, _utils.defineAliasedType)("Miscellaneous");
 {
   defineType("Noop", {
@@ -13753,7 +13554,7 @@ defineType("V8IntrinsicIdentifier", {
 
 
 /***/ }),
-/* 49 */
+/* 46 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -13763,7 +13564,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.PLACEHOLDERS_FLIPPED_ALIAS = exports.PLACEHOLDERS_ALIAS = exports.PLACEHOLDERS = void 0;
-var _utils = __webpack_require__(45);
+var _utils = __webpack_require__(42);
 const PLACEHOLDERS = exports.PLACEHOLDERS = ["Identifier", "StringLiteral", "Expression", "Statement", "Declaration", "BlockStatement", "ClassBody", "Pattern"];
 const PLACEHOLDERS_ALIAS = exports.PLACEHOLDERS_ALIAS = {
   Declaration: ["Statement"],
@@ -13787,13 +13588,13 @@ Object.keys(PLACEHOLDERS_ALIAS).forEach(type => {
 
 
 /***/ }),
-/* 50 */
+/* 47 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _utils = __webpack_require__(45);
+var _utils = __webpack_require__(42);
 (0, _utils.default)("ArgumentPlaceholder", {});
 (0, _utils.default)("BindExpression", {
   visitor: ["object", "callee"],
@@ -13928,15 +13729,15 @@ var _utils = __webpack_require__(45);
 
 
 /***/ }),
-/* 51 */
+/* 48 */
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
 
 
-var _utils = __webpack_require__(45);
-var _core = __webpack_require__(35);
-var _is = __webpack_require__(36);
+var _utils = __webpack_require__(42);
+var _core = __webpack_require__(32);
+var _is = __webpack_require__(33);
 const defineType = (0, _utils.defineAliasedType)("TypeScript");
 const bool = (0, _utils.assertValueType)("boolean");
 const tSFunctionTypeAnnotationCommon = () => ({
@@ -14432,7 +14233,7 @@ defineType("TSTypeParameter", {
 
 
 /***/ }),
-/* 52 */
+/* 49 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -14450,7 +14251,7 @@ const DEPRECATED_ALIASES = exports.DEPRECATED_ALIASES = {
 
 
 /***/ }),
-/* 53 */
+/* 50 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -14460,7 +14261,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = assertNode;
-var _isNode = __webpack_require__(54);
+var _isNode = __webpack_require__(51);
 function assertNode(node) {
   if (!(0, _isNode.default)(node)) {
     var _node$type;
@@ -14473,7 +14274,7 @@ function assertNode(node) {
 
 
 /***/ }),
-/* 54 */
+/* 51 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -14483,7 +14284,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isNode;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function isNode(node) {
   return !!(node && _index.VISITOR_KEYS[node.type]);
 }
@@ -14492,7 +14293,7 @@ function isNode(node) {
 
 
 /***/ }),
-/* 55 */
+/* 52 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -14805,8 +14606,8 @@ exports.assertWhile = assertWhile;
 exports.assertWhileStatement = assertWhileStatement;
 exports.assertWithStatement = assertWithStatement;
 exports.assertYieldExpression = assertYieldExpression;
-var _is = __webpack_require__(36);
-var _deprecationWarning = __webpack_require__(28);
+var _is = __webpack_require__(33);
+var _deprecationWarning = __webpack_require__(25);
 function assert(type, node, opts) {
   if (!(0, _is.default)(type, node, opts)) {
     throw new Error(`Expected type "${type}" with option ${JSON.stringify(opts)}, ` + `but instead got "${node.type}".`);
@@ -15734,7 +15535,7 @@ function assertModuleDeclaration(node, opts) {
 
 
 /***/ }),
-/* 56 */
+/* 53 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15744,7 +15545,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _index = __webpack_require__(32);
+var _index = __webpack_require__(29);
 var _default = exports["default"] = createTypeAnnotationBasedOnTypeof;
 function createTypeAnnotationBasedOnTypeof(type) {
   switch (type) {
@@ -15772,7 +15573,7 @@ function createTypeAnnotationBasedOnTypeof(type) {
 
 
 /***/ }),
-/* 57 */
+/* 54 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15782,8 +15583,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createFlowUnionType;
-var _index = __webpack_require__(32);
-var _removeTypeDuplicates = __webpack_require__(58);
+var _index = __webpack_require__(29);
+var _removeTypeDuplicates = __webpack_require__(55);
 function createFlowUnionType(types) {
   const flattened = (0, _removeTypeDuplicates.default)(types);
   if (flattened.length === 1) {
@@ -15797,7 +15598,7 @@ function createFlowUnionType(types) {
 
 
 /***/ }),
-/* 58 */
+/* 55 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15807,7 +15608,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = removeTypeDuplicates;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function getQualifiedName(node) {
   return (0, _index.isIdentifier)(node) ? node.name : `${node.id.name}.${getQualifiedName(node.qualification)}`;
 }
@@ -15869,7 +15670,7 @@ function removeTypeDuplicates(nodesIn) {
 
 
 /***/ }),
-/* 59 */
+/* 56 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15879,9 +15680,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = createTSUnionType;
-var _index = __webpack_require__(32);
-var _removeTypeDuplicates = __webpack_require__(60);
-var _index2 = __webpack_require__(26);
+var _index = __webpack_require__(29);
+var _removeTypeDuplicates = __webpack_require__(57);
+var _index2 = __webpack_require__(23);
 function createTSUnionType(typeAnnotations) {
   const types = typeAnnotations.map(type => {
     return (0, _index2.isTSTypeAnnotation)(type) ? type.typeAnnotation : type;
@@ -15898,7 +15699,7 @@ function createTSUnionType(typeAnnotations) {
 
 
 /***/ }),
-/* 60 */
+/* 57 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -15908,7 +15709,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = removeTypeDuplicates;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function getQualifiedName(node) {
   return (0, _index.isIdentifier)(node) ? node.name : `${node.right.name}.${getQualifiedName(node.left)}`;
 }
@@ -15970,7 +15771,7 @@ function removeTypeDuplicates(nodesIn) {
 
 
 /***/ }),
-/* 61 */
+/* 58 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17503,13 +17304,13 @@ Object.defineProperty(exports, "YieldExpression", ({
     return _index.yieldExpression;
   }
 }));
-var _index = __webpack_require__(32);
+var _index = __webpack_require__(29);
 
 //# sourceMappingURL=uppercase.js.map
 
 
 /***/ }),
-/* 62 */
+/* 59 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17519,7 +17320,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.buildUndefinedNode = buildUndefinedNode;
-var _index = __webpack_require__(32);
+var _index = __webpack_require__(29);
 function buildUndefinedNode() {
   return (0, _index.unaryExpression)("void", (0, _index.numericLiteral)(0), true);
 }
@@ -17528,7 +17329,7 @@ function buildUndefinedNode() {
 
 
 /***/ }),
-/* 63 */
+/* 60 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17538,8 +17339,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = cloneNode;
-var _index = __webpack_require__(34);
-var _index2 = __webpack_require__(26);
+var _index = __webpack_require__(31);
+var _index2 = __webpack_require__(23);
 const {
   hasOwn
 } = {
@@ -17642,7 +17443,7 @@ function maybeCloneComments(comments, deep, withoutLoc, commentsCache) {
 
 
 /***/ }),
-/* 64 */
+/* 61 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17652,12 +17453,69 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = clone;
-var _cloneNode = __webpack_require__(63);
+var _cloneNode = __webpack_require__(60);
 function clone(node) {
   return (0, _cloneNode.default)(node, false);
 }
 
 //# sourceMappingURL=clone.js.map
+
+
+/***/ }),
+/* 62 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = cloneDeep;
+var _cloneNode = __webpack_require__(60);
+function cloneDeep(node) {
+  return (0, _cloneNode.default)(node);
+}
+
+//# sourceMappingURL=cloneDeep.js.map
+
+
+/***/ }),
+/* 63 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = cloneDeepWithoutLoc;
+var _cloneNode = __webpack_require__(60);
+function cloneDeepWithoutLoc(node) {
+  return (0, _cloneNode.default)(node, true, true);
+}
+
+//# sourceMappingURL=cloneDeepWithoutLoc.js.map
+
+
+/***/ }),
+/* 64 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = cloneWithoutLoc;
+var _cloneNode = __webpack_require__(60);
+function cloneWithoutLoc(node) {
+  return (0, _cloneNode.default)(node, false, true);
+}
+
+//# sourceMappingURL=cloneWithoutLoc.js.map
 
 
 /***/ }),
@@ -17670,65 +17528,8 @@ function clone(node) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = cloneDeep;
-var _cloneNode = __webpack_require__(63);
-function cloneDeep(node) {
-  return (0, _cloneNode.default)(node);
-}
-
-//# sourceMappingURL=cloneDeep.js.map
-
-
-/***/ }),
-/* 66 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = cloneDeepWithoutLoc;
-var _cloneNode = __webpack_require__(63);
-function cloneDeepWithoutLoc(node) {
-  return (0, _cloneNode.default)(node, true, true);
-}
-
-//# sourceMappingURL=cloneDeepWithoutLoc.js.map
-
-
-/***/ }),
-/* 67 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = cloneWithoutLoc;
-var _cloneNode = __webpack_require__(63);
-function cloneWithoutLoc(node) {
-  return (0, _cloneNode.default)(node, false, true);
-}
-
-//# sourceMappingURL=cloneWithoutLoc.js.map
-
-
-/***/ }),
-/* 68 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
 exports["default"] = addComment;
-var _addComments = __webpack_require__(69);
+var _addComments = __webpack_require__(66);
 function addComment(node, type, content, line) {
   return (0, _addComments.default)(node, type, [{
     type: line ? "CommentLine" : "CommentBlock",
@@ -17740,7 +17541,7 @@ function addComment(node, type, content, line) {
 
 
 /***/ }),
-/* 69 */
+/* 66 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -17769,7 +17570,7 @@ function addComments(node, type, comments) {
 
 
 /***/ }),
-/* 70 */
+/* 67 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17779,7 +17580,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = inheritInnerComments;
-var _inherit = __webpack_require__(71);
+var _inherit = __webpack_require__(68);
 function inheritInnerComments(child, parent) {
   (0, _inherit.default)("innerComments", child, parent);
 }
@@ -17788,7 +17589,7 @@ function inheritInnerComments(child, parent) {
 
 
 /***/ }),
-/* 71 */
+/* 68 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -17808,7 +17609,7 @@ function inherit(key, child, parent) {
 
 
 /***/ }),
-/* 72 */
+/* 69 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17818,12 +17619,77 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = inheritLeadingComments;
-var _inherit = __webpack_require__(71);
+var _inherit = __webpack_require__(68);
 function inheritLeadingComments(child, parent) {
   (0, _inherit.default)("leadingComments", child, parent);
 }
 
 //# sourceMappingURL=inheritLeadingComments.js.map
+
+
+/***/ }),
+/* 70 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = inheritsComments;
+var _inheritTrailingComments = __webpack_require__(71);
+var _inheritLeadingComments = __webpack_require__(69);
+var _inheritInnerComments = __webpack_require__(67);
+function inheritsComments(child, parent) {
+  (0, _inheritTrailingComments.default)(child, parent);
+  (0, _inheritLeadingComments.default)(child, parent);
+  (0, _inheritInnerComments.default)(child, parent);
+  return child;
+}
+
+//# sourceMappingURL=inheritsComments.js.map
+
+
+/***/ }),
+/* 71 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = inheritTrailingComments;
+var _inherit = __webpack_require__(68);
+function inheritTrailingComments(child, parent) {
+  (0, _inherit.default)("trailingComments", child, parent);
+}
+
+//# sourceMappingURL=inheritTrailingComments.js.map
+
+
+/***/ }),
+/* 72 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = removeComments;
+var _index = __webpack_require__(41);
+function removeComments(node) {
+  _index.COMMENT_KEYS.forEach(key => {
+    node[key] = null;
+  });
+  return node;
+}
+
+//# sourceMappingURL=removeComments.js.map
 
 
 /***/ }),
@@ -17836,73 +17702,8 @@ function inheritLeadingComments(child, parent) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = inheritsComments;
-var _inheritTrailingComments = __webpack_require__(74);
-var _inheritLeadingComments = __webpack_require__(72);
-var _inheritInnerComments = __webpack_require__(70);
-function inheritsComments(child, parent) {
-  (0, _inheritTrailingComments.default)(child, parent);
-  (0, _inheritLeadingComments.default)(child, parent);
-  (0, _inheritInnerComments.default)(child, parent);
-  return child;
-}
-
-//# sourceMappingURL=inheritsComments.js.map
-
-
-/***/ }),
-/* 74 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = inheritTrailingComments;
-var _inherit = __webpack_require__(71);
-function inheritTrailingComments(child, parent) {
-  (0, _inherit.default)("trailingComments", child, parent);
-}
-
-//# sourceMappingURL=inheritTrailingComments.js.map
-
-
-/***/ }),
-/* 75 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = removeComments;
-var _index = __webpack_require__(44);
-function removeComments(node) {
-  _index.COMMENT_KEYS.forEach(key => {
-    node[key] = null;
-  });
-  return node;
-}
-
-//# sourceMappingURL=removeComments.js.map
-
-
-/***/ }),
-/* 76 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
 exports.WHILE_TYPES = exports.USERWHITESPACABLE_TYPES = exports.UNARYLIKE_TYPES = exports.TYPESCRIPT_TYPES = exports.TSTYPE_TYPES = exports.TSTYPEELEMENT_TYPES = exports.TSENTITYNAME_TYPES = exports.TSBASETYPE_TYPES = exports.TERMINATORLESS_TYPES = exports.STATEMENT_TYPES = exports.STANDARDIZED_TYPES = exports.SCOPABLE_TYPES = exports.PUREISH_TYPES = exports.PROPERTY_TYPES = exports.PRIVATE_TYPES = exports.PATTERN_TYPES = exports.PATTERNLIKE_TYPES = exports.OBJECTMEMBER_TYPES = exports.MODULESPECIFIER_TYPES = exports.MODULEDECLARATION_TYPES = exports.MISCELLANEOUS_TYPES = exports.METHOD_TYPES = exports.LVAL_TYPES = exports.LOOP_TYPES = exports.LITERAL_TYPES = exports.JSX_TYPES = exports.IMPORTOREXPORTDECLARATION_TYPES = exports.IMMUTABLE_TYPES = exports.FUNCTION_TYPES = exports.FUNCTIONPARENT_TYPES = exports.FOR_TYPES = exports.FORXSTATEMENT_TYPES = exports.FLOW_TYPES = exports.FLOWTYPE_TYPES = exports.FLOWPREDICATE_TYPES = exports.FLOWDECLARATION_TYPES = exports.FLOWBASEANNOTATION_TYPES = exports.EXPRESSION_TYPES = exports.EXPRESSIONWRAPPER_TYPES = exports.EXPORTDECLARATION_TYPES = exports.ENUMMEMBER_TYPES = exports.ENUMBODY_TYPES = exports.DECLARATION_TYPES = exports.CONDITIONAL_TYPES = exports.COMPLETIONSTATEMENT_TYPES = exports.CLASS_TYPES = exports.BLOCK_TYPES = exports.BLOCKPARENT_TYPES = exports.BINARY_TYPES = exports.ACCESSOR_TYPES = void 0;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 const STANDARDIZED_TYPES = exports.STANDARDIZED_TYPES = _index.FLIPPED_ALIAS_KEYS["Standardized"];
 const EXPRESSION_TYPES = exports.EXPRESSION_TYPES = _index.FLIPPED_ALIAS_KEYS["Expression"];
 const BINARY_TYPES = exports.BINARY_TYPES = _index.FLIPPED_ALIAS_KEYS["Binary"];
@@ -17958,7 +17759,7 @@ const MODULEDECLARATION_TYPES = exports.MODULEDECLARATION_TYPES = IMPORTOREXPORT
 
 
 /***/ }),
-/* 77 */
+/* 74 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17968,7 +17769,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = ensureBlock;
-var _toBlock = __webpack_require__(78);
+var _toBlock = __webpack_require__(75);
 function ensureBlock(node, key = "body") {
   const result = (0, _toBlock.default)(node[key], node);
   node[key] = result;
@@ -17979,7 +17780,7 @@ function ensureBlock(node, key = "body") {
 
 
 /***/ }),
-/* 78 */
+/* 75 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -17989,8 +17790,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toBlock;
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(32);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(29);
 function toBlock(node, parent) {
   if ((0, _index.isBlockStatement)(node)) {
     return node;
@@ -18015,7 +17816,7 @@ function toBlock(node, parent) {
 
 
 /***/ }),
-/* 79 */
+/* 76 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18025,7 +17826,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toBindingIdentifierName;
-var _toIdentifier = __webpack_require__(80);
+var _toIdentifier = __webpack_require__(77);
 function toBindingIdentifierName(name) {
   name = (0, _toIdentifier.default)(name);
   if (name === "eval" || name === "arguments") name = "_" + name;
@@ -18036,7 +17837,7 @@ function toBindingIdentifierName(name) {
 
 
 /***/ }),
-/* 80 */
+/* 77 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18046,8 +17847,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toIdentifier;
-var _isValidIdentifier = __webpack_require__(39);
-var _helperValidatorIdentifier = __webpack_require__(40);
+var _isValidIdentifier = __webpack_require__(36);
+var _helperValidatorIdentifier = __webpack_require__(37);
 function toIdentifier(input) {
   input = input + "";
   let name = "";
@@ -18068,7 +17869,7 @@ function toIdentifier(input) {
 
 
 /***/ }),
-/* 81 */
+/* 78 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18078,8 +17879,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toComputedKey;
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(32);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(29);
 function toComputedKey(node, key = node.key || node.property) {
   if (!node.computed && (0, _index.isIdentifier)(key)) key = (0, _index2.stringLiteral)(key.name);
   return key;
@@ -18089,7 +17890,7 @@ function toComputedKey(node, key = node.key || node.property) {
 
 
 /***/ }),
-/* 82 */
+/* 79 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18099,7 +17900,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 var _default = exports["default"] = toExpression;
 function toExpression(node) {
   if ((0, _index.isExpressionStatement)(node)) {
@@ -18123,7 +17924,7 @@ function toExpression(node) {
 
 
 /***/ }),
-/* 83 */
+/* 80 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18133,9 +17934,9 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toKeyAlias;
-var _index = __webpack_require__(26);
-var _cloneNode = __webpack_require__(63);
-var _removePropertiesDeep = __webpack_require__(84);
+var _index = __webpack_require__(23);
+var _cloneNode = __webpack_require__(60);
+var _removePropertiesDeep = __webpack_require__(81);
 function toKeyAlias(node, key = node.key) {
   let alias;
   if (node.kind === "method") {
@@ -18168,7 +17969,7 @@ toKeyAlias.increment = function () {
 
 
 /***/ }),
-/* 84 */
+/* 81 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18178,8 +17979,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = removePropertiesDeep;
-var _traverseFast = __webpack_require__(85);
-var _removeProperties = __webpack_require__(86);
+var _traverseFast = __webpack_require__(82);
+var _removeProperties = __webpack_require__(83);
 function removePropertiesDeep(tree, opts) {
   (0, _traverseFast.default)(tree, _removeProperties.default, opts);
   return tree;
@@ -18189,7 +17990,7 @@ function removePropertiesDeep(tree, opts) {
 
 
 /***/ }),
-/* 85 */
+/* 82 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18199,7 +18000,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = traverseFast;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function traverseFast(node, enter, opts) {
   if (!node) return;
   const keys = _index.VISITOR_KEYS[node.type];
@@ -18222,7 +18023,7 @@ function traverseFast(node, enter, opts) {
 
 
 /***/ }),
-/* 86 */
+/* 83 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18232,7 +18033,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = removeProperties;
-var _index = __webpack_require__(44);
+var _index = __webpack_require__(41);
 const CLEAR_KEYS = ["tokens", "start", "end", "loc", "raw", "rawValue"];
 const CLEAR_KEYS_PLUS_COMMENTS = [..._index.COMMENT_KEYS, "comments", ...CLEAR_KEYS];
 function removeProperties(node, opts = {}) {
@@ -18253,7 +18054,7 @@ function removeProperties(node, opts = {}) {
 
 
 /***/ }),
-/* 87 */
+/* 84 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18263,8 +18064,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(32);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(29);
 var _default = exports["default"] = toStatement;
 function toStatement(node, ignore) {
   if ((0, _index.isStatement)(node)) {
@@ -18299,7 +18100,7 @@ function toStatement(node, ignore) {
 
 
 /***/ }),
-/* 88 */
+/* 85 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18309,8 +18110,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _isValidIdentifier = __webpack_require__(39);
-var _index = __webpack_require__(32);
+var _isValidIdentifier = __webpack_require__(36);
+var _index = __webpack_require__(29);
 var _default = exports["default"] = valueToNode;
 const objectToString = Function.call.bind(Object.prototype.toString);
 function isRegExp(value) {
@@ -18382,7 +18183,7 @@ function valueToNode(value) {
 
 
 /***/ }),
-/* 89 */
+/* 86 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18392,7 +18193,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = appendToMemberExpression;
-var _index = __webpack_require__(32);
+var _index = __webpack_require__(29);
 function appendToMemberExpression(member, append, computed = false) {
   member.object = (0, _index.memberExpression)(member.object, member.property, member.computed);
   member.property = append;
@@ -18404,7 +18205,7 @@ function appendToMemberExpression(member, append, computed = false) {
 
 
 /***/ }),
-/* 90 */
+/* 87 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18414,8 +18215,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = inherits;
-var _index = __webpack_require__(44);
-var _inheritsComments = __webpack_require__(73);
+var _index = __webpack_require__(41);
+var _inheritsComments = __webpack_require__(70);
 function inherits(child, parent) {
   if (!child || !parent) return child;
   for (const key of _index.INHERIT_KEYS.optional) {
@@ -18439,7 +18240,7 @@ function inherits(child, parent) {
 
 
 /***/ }),
-/* 91 */
+/* 88 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18449,8 +18250,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = prependToMemberExpression;
-var _index = __webpack_require__(32);
-var _index2 = __webpack_require__(22);
+var _index = __webpack_require__(29);
+var _index2 = __webpack_require__(19);
 function prependToMemberExpression(member, prepend) {
   if ((0, _index2.isSuper)(member.object)) {
     throw new Error("Cannot prepend node to super property access (`super.foo`).");
@@ -18463,7 +18264,7 @@ function prependToMemberExpression(member, prepend) {
 
 
 /***/ }),
-/* 92 */
+/* 89 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -18518,7 +18319,7 @@ function getAssignmentIdentifiers(node) {
 
 
 /***/ }),
-/* 93 */
+/* 90 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18528,7 +18329,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = getBindingIdentifiers;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function getBindingIdentifiers(node, duplicates, outerOnly, newBindingsOnly) {
   const search = [].concat(node);
   const ids = Object.create(null);
@@ -18626,7 +18427,7 @@ getBindingIdentifiers.keys = keys;
 
 
 /***/ }),
-/* 94 */
+/* 91 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18636,7 +18437,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = void 0;
-var _getBindingIdentifiers = __webpack_require__(93);
+var _getBindingIdentifiers = __webpack_require__(90);
 var _default = exports["default"] = getOuterBindingIdentifiers;
 function getOuterBindingIdentifiers(node, duplicates) {
   return (0, _getBindingIdentifiers.default)(node, duplicates, true);
@@ -18646,7 +18447,7 @@ function getOuterBindingIdentifiers(node, duplicates) {
 
 
 /***/ }),
-/* 95 */
+/* 92 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18656,7 +18457,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = getFunctionName;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function getNameFromLiteralId(id) {
   if ((0, _index.isNullLiteral)(id)) {
     return "null";
@@ -18716,7 +18517,7 @@ function getFunctionName(node, parent) {
 
 
 /***/ }),
-/* 96 */
+/* 93 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18726,7 +18527,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = traverse;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function traverse(node, handlers, state) {
   if (typeof handlers === "function") {
     handlers = {
@@ -18773,7 +18574,7 @@ function traverseSimpleImpl(node, enter, exit, state, ancestors) {
 
 
 /***/ }),
-/* 97 */
+/* 94 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18783,7 +18584,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isBinding;
-var _getBindingIdentifiers = __webpack_require__(93);
+var _getBindingIdentifiers = __webpack_require__(90);
 function isBinding(node, parent, grandparent) {
   if (grandparent && node.type === "Identifier" && parent.type === "ObjectProperty" && grandparent.type === "ObjectExpression") {
     return false;
@@ -18807,7 +18608,7 @@ function isBinding(node, parent, grandparent) {
 
 
 /***/ }),
-/* 98 */
+/* 95 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18817,8 +18618,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isBlockScoped;
-var _index = __webpack_require__(26);
-var _isLet = __webpack_require__(99);
+var _index = __webpack_require__(23);
+var _isLet = __webpack_require__(96);
 function isBlockScoped(node) {
   return (0, _index.isFunctionDeclaration)(node) || (0, _index.isClassDeclaration)(node) || (0, _isLet.default)(node);
 }
@@ -18827,7 +18628,7 @@ function isBlockScoped(node) {
 
 
 /***/ }),
-/* 99 */
+/* 96 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18837,8 +18638,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isLet;
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(44);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(41);
 function isLet(node) {
   return (0, _index.isVariableDeclaration)(node) && (node.kind !== "var" || node[_index2.BLOCK_SCOPED_SYMBOL]);
 }
@@ -18847,7 +18648,7 @@ function isLet(node) {
 
 
 /***/ }),
-/* 100 */
+/* 97 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18857,8 +18658,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isImmutable;
-var _isType = __webpack_require__(37);
-var _index = __webpack_require__(26);
+var _isType = __webpack_require__(34);
+var _index = __webpack_require__(23);
 function isImmutable(node) {
   if ((0, _isType.default)(node.type, "Immutable")) return true;
   if ((0, _index.isIdentifier)(node)) {
@@ -18875,7 +18676,7 @@ function isImmutable(node) {
 
 
 /***/ }),
-/* 101 */
+/* 98 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -18885,7 +18686,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isNodesEquivalent;
-var _index = __webpack_require__(34);
+var _index = __webpack_require__(31);
 function isNodesEquivalent(a, b) {
   if (typeof a !== "object" || typeof b !== "object" || a == null || b == null) {
     return a === b;
@@ -18939,7 +18740,7 @@ function isNodesEquivalent(a, b) {
 
 
 /***/ }),
-/* 102 */
+/* 99 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -19042,7 +18843,7 @@ function isReferenced(node, parent, grandparent) {
 
 
 /***/ }),
-/* 103 */
+/* 100 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19052,7 +18853,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isScope;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function isScope(node, parent) {
   if ((0, _index.isBlockStatement)(node) && ((0, _index.isFunction)(parent) || (0, _index.isCatchClause)(parent))) {
     return false;
@@ -19067,7 +18868,7 @@ function isScope(node, parent) {
 
 
 /***/ }),
-/* 104 */
+/* 101 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19077,7 +18878,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isSpecifierDefault;
-var _index = __webpack_require__(26);
+var _index = __webpack_require__(23);
 function isSpecifierDefault(specifier) {
   return (0, _index.isImportDefaultSpecifier)(specifier) || (0, _index.isIdentifier)(specifier.imported || specifier.exported, {
     name: "default"
@@ -19088,7 +18889,7 @@ function isSpecifierDefault(specifier) {
 
 
 /***/ }),
-/* 105 */
+/* 102 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19098,7 +18899,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isValidES3Identifier;
-var _isValidIdentifier = __webpack_require__(39);
+var _isValidIdentifier = __webpack_require__(36);
 const RESERVED_WORDS_ES3_ONLY = new Set(["abstract", "boolean", "byte", "char", "double", "enum", "final", "float", "goto", "implements", "int", "interface", "long", "native", "package", "private", "protected", "public", "short", "static", "synchronized", "throws", "transient", "volatile"]);
 function isValidES3Identifier(name) {
   return (0, _isValidIdentifier.default)(name) && !RESERVED_WORDS_ES3_ONLY.has(name);
@@ -19108,7 +18909,7 @@ function isValidES3Identifier(name) {
 
 
 /***/ }),
-/* 106 */
+/* 103 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19118,8 +18919,8 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = isVar;
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(44);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(41);
 function isVar(node) {
   return (0, _index.isVariableDeclaration)(node, {
     kind: "var"
@@ -19130,7 +18931,7 @@ function isVar(node) {
 
 
 /***/ }),
-/* 107 */
+/* 104 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19140,7 +18941,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = toSequenceExpression;
-var _gatherSequenceExpressions = __webpack_require__(108);
+var _gatherSequenceExpressions = __webpack_require__(105);
 ;
 function toSequenceExpression(nodes, scope) {
   if (!(nodes != null && nodes.length)) return;
@@ -19157,7 +18958,7 @@ function toSequenceExpression(nodes, scope) {
 
 
 /***/ }),
-/* 108 */
+/* 105 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19167,11 +18968,11 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports["default"] = gatherSequenceExpressions;
-var _getBindingIdentifiers = __webpack_require__(93);
-var _index = __webpack_require__(26);
-var _index2 = __webpack_require__(32);
-var _productions = __webpack_require__(62);
-var _cloneNode = __webpack_require__(63);
+var _getBindingIdentifiers = __webpack_require__(90);
+var _index = __webpack_require__(23);
+var _index2 = __webpack_require__(29);
+var _productions = __webpack_require__(59);
+var _cloneNode = __webpack_require__(60);
 ;
 function gatherSequenceExpressions(nodes, declars) {
   const exprs = [];
@@ -19230,7 +19031,7 @@ function gatherSequenceExpressions(nodes, declars) {
 
 
 /***/ }),
-/* 109 */
+/* 106 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19262,8 +19063,8 @@ exports.TSIntersectionType = exports.TSUnionType = TSUnionType;
 exports.IntersectionTypeAnnotation = exports.UnionTypeAnnotation = UnionTypeAnnotation;
 exports.UpdateExpression = UpdateExpression;
 exports.AwaitExpression = exports.YieldExpression = YieldExpression;
-var _t = __webpack_require__(22);
-var _index = __webpack_require__(20);
+var _t = __webpack_require__(19);
+var _index = __webpack_require__(17);
 const {
   isArrayTypeAnnotation,
   isBinaryExpression,
@@ -19462,7 +19263,7 @@ function Identifier(node, parent, tokenContext, _inForInit, getRawIdentifier) {
 
 
 /***/ }),
-/* 110 */
+/* 107 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19472,7 +19273,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 exports.TokenMap = void 0;
-var _t = __webpack_require__(22);
+var _t = __webpack_require__(19);
 const {
   traverseFast,
   VISITOR_KEYS
@@ -19660,7 +19461,7 @@ function* childrenIterator(node) {
 
 
 /***/ }),
-/* 111 */
+/* 108 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19669,7 +19470,7 @@ function* childrenIterator(node) {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-var _templateLiterals = __webpack_require__(112);
+var _templateLiterals = __webpack_require__(109);
 Object.keys(_templateLiterals).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _templateLiterals[key]) return;
@@ -19680,7 +19481,7 @@ Object.keys(_templateLiterals).forEach(function (key) {
     }
   });
 });
-var _expressions = __webpack_require__(113);
+var _expressions = __webpack_require__(110);
 Object.keys(_expressions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _expressions[key]) return;
@@ -19691,7 +19492,7 @@ Object.keys(_expressions).forEach(function (key) {
     }
   });
 });
-var _statements = __webpack_require__(114);
+var _statements = __webpack_require__(111);
 Object.keys(_statements).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _statements[key]) return;
@@ -19702,7 +19503,7 @@ Object.keys(_statements).forEach(function (key) {
     }
   });
 });
-var _classes = __webpack_require__(115);
+var _classes = __webpack_require__(112);
 Object.keys(_classes).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _classes[key]) return;
@@ -19713,7 +19514,7 @@ Object.keys(_classes).forEach(function (key) {
     }
   });
 });
-var _methods = __webpack_require__(116);
+var _methods = __webpack_require__(113);
 Object.keys(_methods).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _methods[key]) return;
@@ -19724,7 +19525,7 @@ Object.keys(_methods).forEach(function (key) {
     }
   });
 });
-var _modules = __webpack_require__(117);
+var _modules = __webpack_require__(114);
 Object.keys(_modules).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _modules[key]) return;
@@ -19735,7 +19536,7 @@ Object.keys(_modules).forEach(function (key) {
     }
   });
 });
-var _types = __webpack_require__(118);
+var _types = __webpack_require__(115);
 Object.keys(_types).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _types[key]) return;
@@ -19746,7 +19547,7 @@ Object.keys(_types).forEach(function (key) {
     }
   });
 });
-var _flow = __webpack_require__(120);
+var _flow = __webpack_require__(117);
 Object.keys(_flow).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _flow[key]) return;
@@ -19757,7 +19558,7 @@ Object.keys(_flow).forEach(function (key) {
     }
   });
 });
-var _base = __webpack_require__(121);
+var _base = __webpack_require__(118);
 Object.keys(_base).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _base[key]) return;
@@ -19768,7 +19569,7 @@ Object.keys(_base).forEach(function (key) {
     }
   });
 });
-var _jsx = __webpack_require__(122);
+var _jsx = __webpack_require__(119);
 Object.keys(_jsx).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _jsx[key]) return;
@@ -19779,7 +19580,7 @@ Object.keys(_jsx).forEach(function (key) {
     }
   });
 });
-var _typescript = __webpack_require__(123);
+var _typescript = __webpack_require__(120);
 Object.keys(_typescript).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   if (key in exports && exports[key] === _typescript[key]) return;
@@ -19795,7 +19596,7 @@ Object.keys(_typescript).forEach(function (key) {
 
 
 /***/ }),
-/* 112 */
+/* 109 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -19837,7 +19638,7 @@ function TemplateLiteral(node) {
 
 
 /***/ }),
-/* 113 */
+/* 110 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -19873,8 +19674,8 @@ exports.UpdateExpression = UpdateExpression;
 exports.V8IntrinsicIdentifier = V8IntrinsicIdentifier;
 exports.YieldExpression = YieldExpression;
 exports._shouldPrintDecoratorsBeforeExport = _shouldPrintDecoratorsBeforeExport;
-var _t = __webpack_require__(22);
-var _index = __webpack_require__(20);
+var _t = __webpack_require__(19);
+var _index = __webpack_require__(17);
 const {
   isCallExpression,
   isLiteral,
@@ -20143,7 +19944,7 @@ function ModuleExpression(node) {
 
 
 /***/ }),
-/* 114 */
+/* 111 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -20170,8 +19971,8 @@ exports.VariableDeclaration = VariableDeclaration;
 exports.VariableDeclarator = VariableDeclarator;
 exports.WhileStatement = WhileStatement;
 exports.WithStatement = WithStatement;
-var _t = __webpack_require__(22);
-var _index = __webpack_require__(20);
+var _t = __webpack_require__(19);
+var _index = __webpack_require__(17);
 const {
   isFor,
   isForStatement,
@@ -20440,7 +20241,7 @@ function VariableDeclarator(node) {
 
 
 /***/ }),
-/* 115 */
+/* 112 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -20458,7 +20259,7 @@ exports.ClassPrivateProperty = ClassPrivateProperty;
 exports.ClassProperty = ClassProperty;
 exports.StaticBlock = StaticBlock;
 exports._classMethodHead = _classMethodHead;
-var _t = __webpack_require__(22);
+var _t = __webpack_require__(19);
 const {
   isExportDefaultDeclaration,
   isExportNamedDeclaration
@@ -20663,7 +20464,7 @@ function StaticBlock(node) {
 
 
 /***/ }),
-/* 116 */
+/* 113 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -20681,8 +20482,8 @@ exports._parameters = _parameters;
 exports._params = _params;
 exports._predicate = _predicate;
 exports._shouldPrintArrowParamsParens = _shouldPrintArrowParamsParens;
-var _t = __webpack_require__(22);
-var _index = __webpack_require__(20);
+var _t = __webpack_require__(19);
+var _index = __webpack_require__(17);
 const {
   isIdentifier
 } = _t;
@@ -20868,7 +20669,7 @@ function _getFuncIdName(idNode, parent) {
 
 
 /***/ }),
-/* 117 */
+/* 114 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -20890,8 +20691,8 @@ exports.ImportExpression = ImportExpression;
 exports.ImportNamespaceSpecifier = ImportNamespaceSpecifier;
 exports.ImportSpecifier = ImportSpecifier;
 exports._printAttributes = _printAttributes;
-var _t = __webpack_require__(22);
-var _index = __webpack_require__(20);
+var _t = __webpack_require__(19);
+var _index = __webpack_require__(17);
 const {
   isClassDeclaration,
   isExportDefaultSpecifier,
@@ -21163,7 +20964,7 @@ function ImportExpression(node) {
 
 
 /***/ }),
-/* 118 */
+/* 115 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -21193,8 +20994,8 @@ exports.StringLiteral = StringLiteral;
 exports.TopicReference = TopicReference;
 exports.TupleExpression = TupleExpression;
 exports._getRawIdentifier = _getRawIdentifier;
-var _t = __webpack_require__(22);
-var _jsesc = __webpack_require__(119);
+var _t = __webpack_require__(19);
+var _jsesc = __webpack_require__(116);
 const {
   isAssignmentPattern,
   isIdentifier
@@ -21421,7 +21222,7 @@ function PipelinePrimaryTopicReference() {
 
 
 /***/ }),
-/* 119 */
+/* 116 */
 /***/ ((module) => {
 
 "use strict";
@@ -21746,7 +21547,7 @@ module.exports = jsesc;
 
 
 /***/ }),
-/* 120 */
+/* 117 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -21829,10 +21630,10 @@ exports.Variance = Variance;
 exports.VoidTypeAnnotation = VoidTypeAnnotation;
 exports._interfaceish = _interfaceish;
 exports._variance = _variance;
-var _t = __webpack_require__(22);
-var _modules = __webpack_require__(117);
-var _index = __webpack_require__(20);
-var _types2 = __webpack_require__(118);
+var _t = __webpack_require__(19);
+var _modules = __webpack_require__(114);
+var _index = __webpack_require__(17);
+var _types2 = __webpack_require__(115);
 const {
   isDeclareExportDeclaration,
   isStatement
@@ -22422,7 +22223,7 @@ function OptionalIndexedAccessType(node) {
 
 
 /***/ }),
-/* 121 */
+/* 118 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -22523,7 +22324,7 @@ function Placeholder(node) {
 
 
 /***/ }),
-/* 122 */
+/* 119 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -22653,7 +22454,7 @@ function JSXClosingFragment() {
 
 
 /***/ }),
-/* 123 */
+/* 120 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -23378,7 +23179,7 @@ function printModifiersList(printer, node, modifiers) {
 
 
 /***/ }),
-/* 124 */
+/* 121 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -23387,22 +23188,22 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TokenizerMode = exports.Tokenizer = exports.Token = exports.html = exports.foreignContent = exports.ErrorCodes = exports.serializeOuter = exports.serialize = exports.Parser = exports.defaultTreeAdapter = void 0;
 exports.parse = parse;
 exports.parseFragment = parseFragment;
-const index_js_1 = __webpack_require__(125);
-var default_js_1 = __webpack_require__(138);
+const index_js_1 = __webpack_require__(122);
+var default_js_1 = __webpack_require__(135);
 Object.defineProperty(exports, "defaultTreeAdapter", ({ enumerable: true, get: function () { return default_js_1.defaultTreeAdapter; } }));
-var index_js_2 = __webpack_require__(125);
+var index_js_2 = __webpack_require__(122);
 Object.defineProperty(exports, "Parser", ({ enumerable: true, get: function () { return index_js_2.Parser; } }));
-var index_js_3 = __webpack_require__(141);
+var index_js_3 = __webpack_require__(138);
 Object.defineProperty(exports, "serialize", ({ enumerable: true, get: function () { return index_js_3.serialize; } }));
 Object.defineProperty(exports, "serializeOuter", ({ enumerable: true, get: function () { return index_js_3.serializeOuter; } }));
-var error_codes_js_1 = __webpack_require__(129);
+var error_codes_js_1 = __webpack_require__(126);
 Object.defineProperty(exports, "ErrorCodes", ({ enumerable: true, get: function () { return error_codes_js_1.ERR; } }));
 /** @internal */
-exports.foreignContent = __webpack_require__(140);
-exports.html = __webpack_require__(135);
-exports.Token = __webpack_require__(130);
+exports.foreignContent = __webpack_require__(137);
+exports.html = __webpack_require__(132);
+exports.Token = __webpack_require__(127);
 /** @internal */
-var index_js_4 = __webpack_require__(126);
+var index_js_4 = __webpack_require__(123);
 Object.defineProperty(exports, "Tokenizer", ({ enumerable: true, get: function () { return index_js_4.Tokenizer; } }));
 Object.defineProperty(exports, "TokenizerMode", ({ enumerable: true, get: function () { return index_js_4.TokenizerMode; } }));
 // Shorthands
@@ -23439,23 +23240,23 @@ function parseFragment(fragmentContext, html, options) {
 
 
 /***/ }),
-/* 125 */
+/* 122 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Parser = void 0;
-const index_js_1 = __webpack_require__(126);
-const open_element_stack_js_1 = __webpack_require__(136);
-const formatting_element_list_js_1 = __webpack_require__(137);
-const default_js_1 = __webpack_require__(138);
-const doctype = __webpack_require__(139);
-const foreignContent = __webpack_require__(140);
-const error_codes_js_1 = __webpack_require__(129);
-const unicode = __webpack_require__(128);
-const html_js_1 = __webpack_require__(135);
-const token_js_1 = __webpack_require__(130);
+const index_js_1 = __webpack_require__(123);
+const open_element_stack_js_1 = __webpack_require__(133);
+const formatting_element_list_js_1 = __webpack_require__(134);
+const default_js_1 = __webpack_require__(135);
+const doctype = __webpack_require__(136);
+const foreignContent = __webpack_require__(137);
+const error_codes_js_1 = __webpack_require__(126);
+const unicode = __webpack_require__(125);
+const html_js_1 = __webpack_require__(132);
+const token_js_1 = __webpack_require__(127);
 //Misc constants
 const HIDDEN_INPUT_TYPE = 'hidden';
 //Adoption agency loops iteration count
@@ -26681,19 +26482,19 @@ function endTagInForeignContent(p, token) {
 
 
 /***/ }),
-/* 126 */
+/* 123 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Tokenizer = exports.TokenizerMode = void 0;
-const preprocessor_js_1 = __webpack_require__(127);
-const unicode_js_1 = __webpack_require__(128);
-const token_js_1 = __webpack_require__(130);
-const decode_js_1 = __webpack_require__(131);
-const error_codes_js_1 = __webpack_require__(129);
-const html_js_1 = __webpack_require__(135);
+const preprocessor_js_1 = __webpack_require__(124);
+const unicode_js_1 = __webpack_require__(125);
+const token_js_1 = __webpack_require__(127);
+const decode_js_1 = __webpack_require__(128);
+const error_codes_js_1 = __webpack_require__(126);
+const html_js_1 = __webpack_require__(132);
 //States
 var State;
 (function (State) {
@@ -29402,15 +29203,15 @@ exports.Tokenizer = Tokenizer;
 
 
 /***/ }),
-/* 127 */
+/* 124 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.Preprocessor = void 0;
-const unicode_js_1 = __webpack_require__(128);
-const error_codes_js_1 = __webpack_require__(129);
+const unicode_js_1 = __webpack_require__(125);
+const error_codes_js_1 = __webpack_require__(126);
 //Const
 const DEFAULT_BUFFER_WATERLINE = 1 << 16;
 //Preprocessor
@@ -29609,7 +29410,7 @@ exports.Preprocessor = Preprocessor;
 
 
 /***/ }),
-/* 128 */
+/* 125 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -29686,7 +29487,7 @@ function isUndefinedCodePoint(cp) {
 
 
 /***/ }),
-/* 129 */
+/* 126 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -29759,7 +29560,7 @@ var ERR;
 
 
 /***/ }),
-/* 130 */
+/* 127 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -29790,7 +29591,7 @@ function getTokenAttr(token, attrName) {
 
 
 /***/ }),
-/* 131 */
+/* 128 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -29823,13 +29624,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.decodeXML = exports.decodeHTMLStrict = exports.decodeHTMLAttribute = exports.decodeHTML = exports.determineBranch = exports.EntityDecoder = exports.DecodingMode = exports.BinTrieFlags = exports.fromCodePoint = exports.replaceCodePoint = exports.decodeCodePoint = exports.xmlDecodeTree = exports.htmlDecodeTree = void 0;
-var decode_data_html_js_1 = __importDefault(__webpack_require__(132));
+var decode_data_html_js_1 = __importDefault(__webpack_require__(129));
 exports.htmlDecodeTree = decode_data_html_js_1.default;
-var decode_data_xml_js_1 = __importDefault(__webpack_require__(133));
+var decode_data_xml_js_1 = __importDefault(__webpack_require__(130));
 exports.xmlDecodeTree = decode_data_xml_js_1.default;
-var decode_codepoint_js_1 = __importStar(__webpack_require__(134));
+var decode_codepoint_js_1 = __importStar(__webpack_require__(131));
 exports.decodeCodePoint = decode_codepoint_js_1.default;
-var decode_codepoint_js_2 = __webpack_require__(134);
+var decode_codepoint_js_2 = __webpack_require__(131);
 Object.defineProperty(exports, "replaceCodePoint", ({ enumerable: true, get: function () { return decode_codepoint_js_2.replaceCodePoint; } }));
 Object.defineProperty(exports, "fromCodePoint", ({ enumerable: true, get: function () { return decode_codepoint_js_2.fromCodePoint; } }));
 var CharCodes;
@@ -30332,7 +30133,7 @@ exports.decodeXML = decodeXML;
 //# sourceMappingURL=decode.js.map
 
 /***/ }),
-/* 132 */
+/* 129 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -30347,7 +30148,7 @@ exports["default"] = new Uint16Array(
 //# sourceMappingURL=decode-data-html.js.map
 
 /***/ }),
-/* 133 */
+/* 130 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -30362,7 +30163,7 @@ exports["default"] = new Uint16Array(
 //# sourceMappingURL=decode-data-xml.js.map
 
 /***/ }),
-/* 134 */
+/* 131 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -30444,7 +30245,7 @@ exports["default"] = decodeCodePoint;
 //# sourceMappingURL=decode_codepoint.js.map
 
 /***/ }),
-/* 135 */
+/* 132 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -30979,14 +30780,14 @@ function hasUnescapedText(tn, scriptingEnabled) {
 
 
 /***/ }),
-/* 136 */
+/* 133 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.OpenElementStack = void 0;
-const html_js_1 = __webpack_require__(135);
+const html_js_1 = __webpack_require__(132);
 //Element utils
 const IMPLICIT_END_TAG_REQUIRED = new Set([html_js_1.TAG_ID.DD, html_js_1.TAG_ID.DT, html_js_1.TAG_ID.LI, html_js_1.TAG_ID.OPTGROUP, html_js_1.TAG_ID.OPTION, html_js_1.TAG_ID.P, html_js_1.TAG_ID.RB, html_js_1.TAG_ID.RP, html_js_1.TAG_ID.RT, html_js_1.TAG_ID.RTC]);
 const IMPLICIT_END_TAG_REQUIRED_THOROUGHLY = new Set([
@@ -31310,7 +31111,7 @@ exports.OpenElementStack = OpenElementStack;
 
 
 /***/ }),
-/* 137 */
+/* 134 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -31431,14 +31232,14 @@ exports.FormattingElementList = FormattingElementList;
 
 
 /***/ }),
-/* 138 */
+/* 135 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.defaultTreeAdapter = void 0;
-const html_js_1 = __webpack_require__(135);
+const html_js_1 = __webpack_require__(132);
 exports.defaultTreeAdapter = {
     //Node construction
     createDocument() {
@@ -31614,7 +31415,7 @@ exports.defaultTreeAdapter = {
 
 
 /***/ }),
-/* 139 */
+/* 136 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31622,7 +31423,7 @@ exports.defaultTreeAdapter = {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.isConforming = isConforming;
 exports.getDocumentMode = getDocumentMode;
-const html_js_1 = __webpack_require__(135);
+const html_js_1 = __webpack_require__(132);
 //Const
 const VALID_DOCTYPE_NAME = 'html';
 const VALID_SYSTEM_ID = 'about:legacy-compat';
@@ -31739,7 +31540,7 @@ function getDocumentMode(token) {
 
 
 /***/ }),
-/* 140 */
+/* 137 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31752,7 +31553,7 @@ exports.adjustTokenSVGAttrs = adjustTokenSVGAttrs;
 exports.adjustTokenXMLAttrs = adjustTokenXMLAttrs;
 exports.adjustTokenSVGTagName = adjustTokenSVGTagName;
 exports.isIntegrationPoint = isIntegrationPoint;
-const html_js_1 = __webpack_require__(135);
+const html_js_1 = __webpack_require__(132);
 //MIME types
 const MIME_TYPES = {
     TEXT_HTML: 'text/html',
@@ -31983,7 +31784,7 @@ function isIntegrationPoint(tn, ns, attrs, foreignNS) {
 
 
 /***/ }),
-/* 141 */
+/* 138 */
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 "use strict";
@@ -31991,9 +31792,9 @@ function isIntegrationPoint(tn, ns, attrs, foreignNS) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.serialize = serialize;
 exports.serializeOuter = serializeOuter;
-const html_js_1 = __webpack_require__(135);
-const escape_js_1 = __webpack_require__(142);
-const default_js_1 = __webpack_require__(138);
+const html_js_1 = __webpack_require__(132);
+const escape_js_1 = __webpack_require__(139);
+const default_js_1 = __webpack_require__(135);
 // Sets
 const VOID_ELEMENTS = new Set([
     html_js_1.TAG_NAMES.AREA,
@@ -32162,7 +31963,7 @@ function serializeDocumentTypeNode(node, { treeAdapter }) {
 
 
 /***/ }),
-/* 142 */
+/* 139 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32290,15 +32091,15 @@ exports.escapeText = getEscaper(/[&<>\u00A0]/g, new Map([
 //# sourceMappingURL=escape.js.map
 
 /***/ }),
-/* 143 */
+/* 140 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
-var __assign=this&&this.__assign||function(){__assign=Object.assign||function(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p]}return t};return __assign.apply(this,arguments)};Object.defineProperty(exports, "__esModule", ({value:true}));var named_references_1=__webpack_require__(144);var numeric_unicode_map_1=__webpack_require__(145);var surrogate_pairs_1=__webpack_require__(146);var allNamedReferences=__assign(__assign({},named_references_1.namedReferences),{all:named_references_1.namedReferences.html5});function replaceUsingRegExp(macroText,macroRegExp,macroReplacer){macroRegExp.lastIndex=0;var replaceMatch=macroRegExp.exec(macroText);var replaceResult;if(replaceMatch){replaceResult="";var replaceLastIndex=0;do{if(replaceLastIndex!==replaceMatch.index){replaceResult+=macroText.substring(replaceLastIndex,replaceMatch.index)}var replaceInput=replaceMatch[0];replaceResult+=macroReplacer(replaceInput);replaceLastIndex=replaceMatch.index+replaceInput.length}while(replaceMatch=macroRegExp.exec(macroText));if(replaceLastIndex!==macroText.length){replaceResult+=macroText.substring(replaceLastIndex)}}else{replaceResult=macroText}return replaceResult}var encodeRegExps={specialChars:/[<>'"&]/g,nonAscii:/[<>'"&\u0080-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,nonAsciiPrintable:/[<>'"&\x01-\x08\x11-\x15\x17-\x1F\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,nonAsciiPrintableOnly:/[\x01-\x08\x11-\x15\x17-\x1F\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,extensive:/[\x01-\x0c\x0e-\x1f\x21-\x2c\x2e-\x2f\x3a-\x40\x5b-\x60\x7b-\x7d\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g};var defaultEncodeOptions={mode:"specialChars",level:"all",numeric:"decimal"};function encode(text,_a){var _b=_a===void 0?defaultEncodeOptions:_a,_c=_b.mode,mode=_c===void 0?"specialChars":_c,_d=_b.numeric,numeric=_d===void 0?"decimal":_d,_e=_b.level,level=_e===void 0?"all":_e;if(!text){return""}var encodeRegExp=encodeRegExps[mode];var references=allNamedReferences[level].characters;var isHex=numeric==="hexadecimal";return replaceUsingRegExp(text,encodeRegExp,(function(input){var result=references[input];if(!result){var code=input.length>1?surrogate_pairs_1.getCodePoint(input,0):input.charCodeAt(0);result=(isHex?"&#x"+code.toString(16):"&#"+code)+";"}return result}))}exports.encode=encode;var defaultDecodeOptions={scope:"body",level:"all"};var strict=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);/g;var attribute=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+)[;=]?/g;var baseDecodeRegExps={xml:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.xml},html4:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.html4},html5:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.html5}};var decodeRegExps=__assign(__assign({},baseDecodeRegExps),{all:baseDecodeRegExps.html5});var fromCharCode=String.fromCharCode;var outOfBoundsChar=fromCharCode(65533);var defaultDecodeEntityOptions={level:"all"};function getDecodedEntity(entity,references,isAttribute,isStrict){var decodeResult=entity;var decodeEntityLastChar=entity[entity.length-1];if(isAttribute&&decodeEntityLastChar==="="){decodeResult=entity}else if(isStrict&&decodeEntityLastChar!==";"){decodeResult=entity}else{var decodeResultByReference=references[entity];if(decodeResultByReference){decodeResult=decodeResultByReference}else if(entity[0]==="&"&&entity[1]==="#"){var decodeSecondChar=entity[2];var decodeCode=decodeSecondChar=="x"||decodeSecondChar=="X"?parseInt(entity.substr(3),16):parseInt(entity.substr(2));decodeResult=decodeCode>=1114111?outOfBoundsChar:decodeCode>65535?surrogate_pairs_1.fromCodePoint(decodeCode):fromCharCode(numeric_unicode_map_1.numericUnicodeMap[decodeCode]||decodeCode)}}return decodeResult}function decodeEntity(entity,_a){var _b=(_a===void 0?defaultDecodeEntityOptions:_a).level,level=_b===void 0?"all":_b;if(!entity){return""}return getDecodedEntity(entity,allNamedReferences[level].entities,false,false)}exports.decodeEntity=decodeEntity;function decode(text,_a){var _b=_a===void 0?defaultDecodeOptions:_a,_c=_b.level,level=_c===void 0?"all":_c,_d=_b.scope,scope=_d===void 0?level==="xml"?"strict":"body":_d;if(!text){return""}var decodeRegExp=decodeRegExps[level][scope];var references=allNamedReferences[level].entities;var isAttribute=scope==="attribute";var isStrict=scope==="strict";return replaceUsingRegExp(text,decodeRegExp,(function(entity){return getDecodedEntity(entity,references,isAttribute,isStrict)}))}exports.decode=decode;
+var __assign=this&&this.__assign||function(){__assign=Object.assign||function(t){for(var s,i=1,n=arguments.length;i<n;i++){s=arguments[i];for(var p in s)if(Object.prototype.hasOwnProperty.call(s,p))t[p]=s[p]}return t};return __assign.apply(this,arguments)};Object.defineProperty(exports, "__esModule", ({value:true}));var named_references_1=__webpack_require__(141);var numeric_unicode_map_1=__webpack_require__(142);var surrogate_pairs_1=__webpack_require__(143);var allNamedReferences=__assign(__assign({},named_references_1.namedReferences),{all:named_references_1.namedReferences.html5});function replaceUsingRegExp(macroText,macroRegExp,macroReplacer){macroRegExp.lastIndex=0;var replaceMatch=macroRegExp.exec(macroText);var replaceResult;if(replaceMatch){replaceResult="";var replaceLastIndex=0;do{if(replaceLastIndex!==replaceMatch.index){replaceResult+=macroText.substring(replaceLastIndex,replaceMatch.index)}var replaceInput=replaceMatch[0];replaceResult+=macroReplacer(replaceInput);replaceLastIndex=replaceMatch.index+replaceInput.length}while(replaceMatch=macroRegExp.exec(macroText));if(replaceLastIndex!==macroText.length){replaceResult+=macroText.substring(replaceLastIndex)}}else{replaceResult=macroText}return replaceResult}var encodeRegExps={specialChars:/[<>'"&]/g,nonAscii:/[<>'"&\u0080-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,nonAsciiPrintable:/[<>'"&\x01-\x08\x11-\x15\x17-\x1F\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,nonAsciiPrintableOnly:/[\x01-\x08\x11-\x15\x17-\x1F\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g,extensive:/[\x01-\x0c\x0e-\x1f\x21-\x2c\x2e-\x2f\x3a-\x40\x5b-\x60\x7b-\x7d\x7f-\uD7FF\uE000-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/g};var defaultEncodeOptions={mode:"specialChars",level:"all",numeric:"decimal"};function encode(text,_a){var _b=_a===void 0?defaultEncodeOptions:_a,_c=_b.mode,mode=_c===void 0?"specialChars":_c,_d=_b.numeric,numeric=_d===void 0?"decimal":_d,_e=_b.level,level=_e===void 0?"all":_e;if(!text){return""}var encodeRegExp=encodeRegExps[mode];var references=allNamedReferences[level].characters;var isHex=numeric==="hexadecimal";return replaceUsingRegExp(text,encodeRegExp,(function(input){var result=references[input];if(!result){var code=input.length>1?surrogate_pairs_1.getCodePoint(input,0):input.charCodeAt(0);result=(isHex?"&#x"+code.toString(16):"&#"+code)+";"}return result}))}exports.encode=encode;var defaultDecodeOptions={scope:"body",level:"all"};var strict=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+);/g;var attribute=/&(?:#\d+|#[xX][\da-fA-F]+|[0-9a-zA-Z]+)[;=]?/g;var baseDecodeRegExps={xml:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.xml},html4:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.html4},html5:{strict:strict,attribute:attribute,body:named_references_1.bodyRegExps.html5}};var decodeRegExps=__assign(__assign({},baseDecodeRegExps),{all:baseDecodeRegExps.html5});var fromCharCode=String.fromCharCode;var outOfBoundsChar=fromCharCode(65533);var defaultDecodeEntityOptions={level:"all"};function getDecodedEntity(entity,references,isAttribute,isStrict){var decodeResult=entity;var decodeEntityLastChar=entity[entity.length-1];if(isAttribute&&decodeEntityLastChar==="="){decodeResult=entity}else if(isStrict&&decodeEntityLastChar!==";"){decodeResult=entity}else{var decodeResultByReference=references[entity];if(decodeResultByReference){decodeResult=decodeResultByReference}else if(entity[0]==="&"&&entity[1]==="#"){var decodeSecondChar=entity[2];var decodeCode=decodeSecondChar=="x"||decodeSecondChar=="X"?parseInt(entity.substr(3),16):parseInt(entity.substr(2));decodeResult=decodeCode>=1114111?outOfBoundsChar:decodeCode>65535?surrogate_pairs_1.fromCodePoint(decodeCode):fromCharCode(numeric_unicode_map_1.numericUnicodeMap[decodeCode]||decodeCode)}}return decodeResult}function decodeEntity(entity,_a){var _b=(_a===void 0?defaultDecodeEntityOptions:_a).level,level=_b===void 0?"all":_b;if(!entity){return""}return getDecodedEntity(entity,allNamedReferences[level].entities,false,false)}exports.decodeEntity=decodeEntity;function decode(text,_a){var _b=_a===void 0?defaultDecodeOptions:_a,_c=_b.level,level=_c===void 0?"all":_c,_d=_b.scope,scope=_d===void 0?level==="xml"?"strict":"body":_d;if(!text){return""}var decodeRegExp=decodeRegExps[level][scope];var references=allNamedReferences[level].entities;var isAttribute=scope==="attribute";var isStrict=scope==="strict";return replaceUsingRegExp(text,decodeRegExp,(function(entity){return getDecodedEntity(entity,references,isAttribute,isStrict)}))}exports.decode=decode;
 //# sourceMappingURL=./index.js.map
 
 /***/ }),
-/* 144 */
+/* 141 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32306,7 +32107,7 @@ Object.defineProperty(exports, "__esModule", ({value:true}));exports.bodyRegExps
 //# sourceMappingURL=./named-references.js.map
 
 /***/ }),
-/* 145 */
+/* 142 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32314,7 +32115,7 @@ Object.defineProperty(exports, "__esModule", ({value:true}));exports.numericUnic
 //# sourceMappingURL=./numeric-unicode-map.js.map
 
 /***/ }),
-/* 146 */
+/* 143 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -32322,7 +32123,7 @@ Object.defineProperty(exports, "__esModule", ({value:true}));exports.fromCodePoi
 //# sourceMappingURL=./surrogate-pairs.js.map
 
 /***/ }),
-/* 147 */
+/* 144 */
 /***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
 "use strict";
@@ -32332,10 +32133,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.convertAttributes = void 0;
-const parser_1 = __webpack_require__(148);
-const types_1 = __webpack_require__(22);
-const style_to_object_1 = __importDefault(__webpack_require__(149));
-const attributes_1 = __webpack_require__(151);
+const parser_1 = __webpack_require__(145);
+const types_1 = __webpack_require__(19);
+const style_to_object_1 = __importDefault(__webpack_require__(146));
+const attributes_1 = __webpack_require__(148);
 function convertAttributes(attributes) {
     return attributes.map(({ name: attributeName, value: attributeValue }) => {
         if (attributeName === "style") {
@@ -32466,7 +32267,7 @@ function createJSXAttribute(name, value) {
 
 
 /***/ }),
-/* 148 */
+/* 145 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -46496,10 +46297,10 @@ exports.tokTypes = tokTypes;
 
 
 /***/ }),
-/* 149 */
+/* 146 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var parse = __webpack_require__(150);
+var parse = __webpack_require__(147);
 
 /**
  * Parses inline style to object.
@@ -46545,7 +46346,7 @@ module.exports["default"] = StyleToObject; // ESM support
 
 
 /***/ }),
-/* 150 */
+/* 147 */
 /***/ ((module) => {
 
 // http://www.w3.org/TR/CSS21/grammar.html
@@ -46812,7 +46613,7 @@ function trim(str) {
 
 
 /***/ }),
-/* 151 */
+/* 148 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -47110,7 +46911,7 @@ exports.styleDontStripPx = [
 
 
 /***/ }),
-/* 152 */
+/* 149 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -47167,6 +46968,207 @@ function splitMergeTags(str) {
 exports.splitMergeTags = splitMergeTags;
 
 
+/***/ }),
+/* 150 */
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.translateAndInsert = void 0;
+const vs = __webpack_require__(1);
+const dist_1 = __webpack_require__(151);
+const constant_1 = __webpack_require__(152);
+const editor_1 = __webpack_require__(2);
+const translateAndInsert = () => __awaiter(void 0, void 0, void 0, function* () {
+    const data = (0, editor_1.getTextAtSelections)();
+    if (!data && (data === null || data === void 0 ? void 0 : data[0]) === '')
+        return;
+    const sourceLanguageQP = vs.window.createQuickPick();
+    sourceLanguageQP.placeholder = 'Select Source Language';
+    sourceLanguageQP.items = constant_1.SOURCE_LANGUAGE;
+    sourceLanguageQP.show();
+    sourceLanguageQP.onDidChangeSelection((item) => {
+        sourceLanguageQP.dispose();
+        const sl = item[0];
+        const targetLanguageQP = vs.window.createQuickPick();
+        targetLanguageQP.placeholder = 'Select Translate Language';
+        targetLanguageQP.items = constant_1.LANGUAGES;
+        targetLanguageQP.show();
+        targetLanguageQP.onDidChangeSelection((item) => __awaiter(void 0, void 0, void 0, function* () {
+            var _a;
+            const tl = item[0];
+            targetLanguageQP.dispose();
+            const translatedData = yield (0, dist_1.Translate)((_a = data === null || data === void 0 ? void 0 : data[0]) !== null && _a !== void 0 ? _a : '', sl.value, tl.value);
+            if (translatedData.result)
+                (0, editor_1.insertTextAtSelections)(translatedData.result);
+        }));
+    });
+});
+exports.translateAndInsert = translateAndInsert;
+
+
+/***/ }),
+/* 151 */
+/***/ (function(__unused_webpack_module, exports) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Translate = void 0;
+const Translate = (text, sourceLanguage, translateLanguage) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
+    const result = {
+        text,
+        result: '',
+        sourceLanguage: sourceLanguage,
+        translateLanguage: translateLanguage,
+    };
+    try {
+        const res = yield fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${translateLanguage}&dt=t&q=${text}`, {
+            method: 'GET',
+            redirect: 'follow',
+        });
+        if (res.ok) {
+            const data = yield res.json();
+            result.result = ((_b = (_a = data === null || data === void 0 ? void 0 : data[0]) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b[0]) || '';
+        }
+        return result;
+    }
+    catch (error) {
+        result.errors = {
+            message: 'Error: ' + (error === null || error === void 0 ? void 0 : error.message),
+            code: -1,
+        };
+        return result;
+    }
+});
+exports.Translate = Translate;
+
+
+/***/ }),
+/* 152 */
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SOURCE_LANGUAGE = exports.LANGUAGES = void 0;
+exports.LANGUAGES = [
+    { value: 'af', label: 'Afrikaans' },
+    { value: 'am', label: 'Amharic' },
+    { value: 'ar', label: 'Arabic' },
+    { value: 'as', label: 'Assamese' },
+    { value: 'ay', label: 'Aymara' },
+    { value: 'az', label: 'Azerbaijani' },
+    { value: 'be', label: 'Belarusian' },
+    { value: 'bg', label: 'Bulgarian' },
+    { value: 'bn', label: 'Bengali' },
+    { value: 'bs', label: 'Bosnian' },
+    { value: 'ca', label: 'Catalan' },
+    { value: 'ceb', label: 'Cebuano' },
+    { value: 'co', label: 'Corsican' },
+    { value: 'cs', label: 'Czech' },
+    { value: 'cy', label: 'Welsh' },
+    { value: 'da', label: 'Danish' },
+    { value: 'de', label: 'German' },
+    { value: 'dv', label: 'Divehi' },
+    { value: 'el', label: 'Greek' },
+    { value: 'en', label: 'English' },
+    { value: 'eo', label: 'Esperanto' },
+    { value: 'es', label: 'Spanish' },
+    { value: 'et', label: 'Estonian' },
+    { value: 'eu', label: 'Basque' },
+    { value: 'fa', label: 'Persian' },
+    { value: 'fi', label: 'Finnish' },
+    { value: 'fil', label: 'Filipino' },
+    { value: 'fo', label: 'Faroese' },
+    { value: 'fr', label: 'French' },
+    { value: 'fy', label: 'Frisian' },
+    { value: 'ga', label: 'Irish' },
+    { value: 'gl', label: 'Galician' },
+    { value: 'gn', label: 'Guarani' },
+    { value: 'gu', label: 'Gujarati' },
+    { value: 'ha', label: 'Hausa' },
+    { value: 'haw', label: 'Hawaiian' },
+    { value: 'hi', label: 'Hindi' },
+    { value: 'hr', label: 'Croatian' },
+    { value: 'ht', label: 'Haitian Creole' },
+    { value: 'hu', label: 'Hungarian' },
+    { value: 'hy', label: 'Armenian' },
+    { value: 'id', label: 'Indonesian' },
+    { value: 'ig', label: 'Igbo' },
+    { value: 'is', label: 'Icelandic' },
+    { value: 'it', label: 'Italian' },
+    { value: 'ja', label: 'Japanese' },
+    // { value: 'jw', label: 'Javanese' },
+    { value: 'ka', label: 'Georgian' },
+    { value: 'kk', label: 'Kazakh' },
+    { value: 'km', label: 'Khmer' },
+    { value: 'kn', label: 'Kannada' },
+    { value: 'ko', label: 'Korean' },
+    { value: 'la', label: 'Latin' },
+    { value: 'lv', label: 'Latvian' },
+    { value: 'mk', label: 'Macedonian' },
+    { value: 'ml', label: 'Malayalam' },
+    { value: 'mr', label: 'Marathi' },
+    { value: 'ms', label: 'Malay' },
+    { value: 'mt', label: 'Maltese' },
+    { value: 'my', label: 'Burmese' },
+    { value: 'ne', label: 'Nepali' },
+    { value: 'nl', label: 'Dutch' },
+    { value: 'no', label: 'Norwegian' },
+    { value: 'pl', label: 'Polish' },
+    { value: 'ps', label: 'Pashto' },
+    { value: 'pt', label: 'Portuguese' },
+    { value: 'ro', label: 'Romanian' },
+    { value: 'ru', label: 'Russian' },
+    { value: 'si', label: 'Sinhala' },
+    { value: 'sk', label: 'Slovak' },
+    { value: 'sl', label: 'Slovenian' },
+    { value: 'sr', label: 'Serbian' },
+    { value: 'su', label: 'Sundanese' },
+    { value: 'sv', label: 'Swedish' },
+    { value: 'sw', label: 'Swahili' },
+    { value: 'ta', label: 'Tamil' },
+    { value: 'te', label: 'Telugu' },
+    { value: 'th', label: 'Thai' },
+    { value: 'tr', label: 'Turkish' },
+    { value: 'uk', label: 'Ukrainian' },
+    { value: 'ur', label: 'Urdu' },
+    { value: 'vi', label: 'Vietnamese' },
+    // { value: 'wa', label: 'Walloon' },
+    { value: 'xh', label: 'Xhosa' },
+    { value: 'yi', label: 'Yiddish' },
+    { value: 'zu', label: 'Zulu' },
+];
+exports.SOURCE_LANGUAGE = [
+    {
+        label: 'Auto',
+        value: 'auto',
+    },
+    ...exports.LANGUAGES,
+];
+
+
 /***/ })
 /******/ 	]);
 /************************************************************************/
@@ -47204,10 +47206,10 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.deactivate = exports.activate = void 0;
 const vscode = __webpack_require__(1);
-const editor_1 = __webpack_require__(4);
-const select_func_1 = __webpack_require__(6);
-const text_func_1 = __webpack_require__(8);
-const translate_func_1 = __webpack_require__(2);
+const editor_1 = __webpack_require__(2);
+const select_func_1 = __webpack_require__(3);
+const text_func_1 = __webpack_require__(5);
+const translate_func_1 = __webpack_require__(150);
 const activate = (context) => {
     let select = vscode.commands.registerCommand('quangtrong.vscode.open-select', () => {
         console.log('Open selecte');

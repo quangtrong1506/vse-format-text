@@ -3,7 +3,7 @@
     "displayName": "Convert variable, Translate text",
     "description": "Convert a string to variable, variable to string, translate text ...",
     "version": "2.0.0",
-    "icon": "./logo.png",
+    "icon": "logo.png",
     "engines": {
         "vscode": "^1.95.0"
     },
@@ -45,9 +45,14 @@
                 "mac": "shift+cmd+f"
             },
             {
+                "command": "quangtrong.vscode.open-select",
+                "key": "ctrl+alt+c",
+                "mac": "shift+cmd+c"
+            },
+            {
                 "command": "quangtrong.vscode.console-log",
-                "key": "ctrl+l",
-                "mac": "cmd+l"
+                "key": "ctrl+alt+l",
+                "mac": "shift+cmd+l"
             },
             {
                 "command": "quangtrong.vscode.translate",
@@ -87,6 +92,14 @@
         "ts-loader": "^9.5.1",
         "typescript": "^5.6.3",
         "webpack": "^5.95.0",
-        "webpack-cli": "^5.1.4"
+        "webpack-cli": "^5.1.4",
+        "vsce": "^2.15.0"
+    },
+    "author": {
+        "name": "QuangTrong1506",
+        "email": "quangtrong.tran@gmail.com"
+    },
+    "repository": {
+        "url": "https://github.com/quangtrong1506/vse-format-text"
     }
 }
