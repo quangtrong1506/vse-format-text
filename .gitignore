@@ -1,0 +1,7 @@
+/node_modules
+/.vscode-test
+.vscode/**
+.vscode-test/**
+src/**
+vsc-extension-quickstart.md
+**/.vscode-test.*

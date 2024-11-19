@@ -1,0 +1,35 @@
+{
+    "name": "free-google-translate-api-ts",
+    "version": "1.0.1",
+    "description": "Free google translate api library",
+    "main": "index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest"
+    },
+    "keywords": [
+        "translate",
+        "translate-api",
+        "google-translate",
+        "google-translate-api",
+        "free-google-translate",
+        "free-google-translate-api"
+    ],
+    "author": "quangtrong1506",
+    "repository": {
+        "url": "https://github.com/quangtrong1506/free-google-translate-api-ts"
+    },
+    "license": "ISC",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@types/jest": "^29.5.14",
+        "@types/node": "^22.9.0",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.2.5",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.6.3"
+    }
+}
