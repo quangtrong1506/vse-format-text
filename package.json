@@ -75,7 +75,7 @@
         "test": "vscode-test",
         "copy-translate-folder": "copyfiles -u 1 node_modules/free-google-translate-api-ts/**/* ./dist/",
         "copy-jsx-folder": "copyfiles -u 1 node_modules/html-to-jsx-transform/**/* ./dist/",
-        "publish": "npm compile && vsce package && vsce publish"
+        "publish": "npm run compile && vsce package && vsce publish"
     },
     "dependencies": {
         "free-google-translate-api-ts": "^1.0.3",

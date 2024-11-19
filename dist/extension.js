@@ -9,6 +9,110 @@ module.exports = require("vscode");
 
 /***/ }),
 /* 2 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.insertTextAtSelections = exports.getTextAtSelections = void 0;
+const vscode = __webpack_require__(1);
+//Todo: Hàm lấy text tại tất cả các vị trí con trỏ
+const getTextAtSelections = () => {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor)
+        return null;
+    const selections = editor.selections;
+    // Lấy text trong từng vùng chọn
+    const texts = selections.map((selection) => editor.document.getText(selection));
+    return texts;
+};
+exports.getTextAtSelections = getTextAtSelections;
+//Todo: Hàm chèn text tại tất cả các vị trí con trỏ
+const insertTextAtSelections = (mutils) => {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor) {
+        vscode.window.showErrorMessage('Không có editor nào đang hoạt động!');
+        return;
+    }
+    editor.edit((editBuilder) => {
+        const selections = editor.selections;
+        selections.forEach((selection, index) => {
+            var _a, _b;
+            if (!selection.isEmpty) {
+                editBuilder.replace(selection, (_a = mutils[index]) !== null && _a !== void 0 ? _a : ''); // Thay thế vùng chọn
+            }
+            else {
+                editBuilder.insert(selection.start, (_b = mutils[index]) !== null && _b !== void 0 ? _b : ''); // Chèn text tại vị trí con trỏ
+            }
+        });
+    });
+};
+exports.insertTextAtSelections = insertTextAtSelections;
+
+
+/***/ }),
+/* 3 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.handleSelect = exports.openSelect = void 0;
+const vs = __webpack_require__(1);
+const constant_1 = __webpack_require__(4);
+const editor_1 = __webpack_require__(2);
+const text_func_1 = __webpack_require__(5);
+const openSelect = () => {
+    const QuickPick = vs.window.createQuickPick();
+    QuickPick.items = constant_1.SELECTS;
+    QuickPick.show();
+    QuickPick.onDidChangeSelection((select) => {
+        const item = select[0];
+        (0, exports.handleSelect)(item.id);
+        QuickPick.dispose();
+    });
+};
+exports.openSelect = openSelect;
+const handleSelect = (id) => {
+    const data = (0, editor_1.getTextAtSelections)();
+    if (!data)
+        return;
+    if (id === constant_1.SelectIds.add_log)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.addConsole)(text)));
+    if (id === constant_1.SelectIds.camelcase)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toCamelCase)(text)));
+    if (id === constant_1.SelectIds.capitalize)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toCapitalized)(text)));
+    if (id === constant_1.SelectIds.clear_double_whitespace)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.cleanWhiteSpace)(text)));
+    if (id === constant_1.SelectIds.dash)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.cleanWhiteSpace)(text)));
+    if (id === constant_1.SelectIds.constant)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toConstantCase)(text)));
+    if (id === constant_1.SelectIds.html_to_jsx)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toJSX)(text)));
+    if (id === constant_1.SelectIds.import_to_require)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.convertImport)(text, 'import_to_require')));
+    if (id === constant_1.SelectIds.lowercase)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toLowerCase)(text)));
+    if (id === constant_1.SelectIds.pascalCase)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toPascalCase)(text)));
+    if (id === constant_1.SelectIds.remove_vietnamese_characters)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.removeVietnameseCharacters)(text)));
+    if (id === constant_1.SelectIds.require_to_import)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.convertImport)(text, 'require_to_import')));
+    if (id === constant_1.SelectIds.to_text)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.variableToString)(text)));
+    if (id === constant_1.SelectIds.underscore)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toSnakeCase)(text)));
+    if (id === constant_1.SelectIds.uppercase)
+        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toUpperCase)(text)));
+};
+exports.handleSelect = handleSelect;
+
+
+/***/ }),
+/* 4 */
 /***/ ((__unused_webpack_module, exports) => {
 
 "use strict";
@@ -92,110 +196,6 @@ exports.SELECTS = [
         label: 'Import to Require',
     },
 ];
-
-
-/***/ }),
-/* 3 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.handleSelect = exports.openSelect = void 0;
-const vs = __webpack_require__(1);
-const constant_1 = __webpack_require__(2);
-const editor_1 = __webpack_require__(4);
-const text_func_1 = __webpack_require__(5);
-const openSelect = () => {
-    const QuickPick = vs.window.createQuickPick();
-    QuickPick.items = constant_1.SELECTS;
-    QuickPick.show();
-    QuickPick.onDidChangeSelection((select) => {
-        const item = select[0];
-        (0, exports.handleSelect)(item.id);
-        QuickPick.dispose();
-    });
-};
-exports.openSelect = openSelect;
-const handleSelect = (id) => {
-    const data = (0, editor_1.getTextAtSelections)();
-    if (!data)
-        return;
-    if (id === constant_1.SelectIds.add_log)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.addConsole)(text)));
-    if (id === constant_1.SelectIds.camelcase)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toCamelCase)(text)));
-    if (id === constant_1.SelectIds.capitalize)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toCapitalized)(text)));
-    if (id === constant_1.SelectIds.clear_double_whitespace)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.cleanWhiteSpace)(text)));
-    if (id === constant_1.SelectIds.dash)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.cleanWhiteSpace)(text)));
-    if (id === constant_1.SelectIds.constant)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toConstantCase)(text)));
-    if (id === constant_1.SelectIds.html_to_jsx)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toJSX)(text)));
-    if (id === constant_1.SelectIds.import_to_require)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.convertImport)(text, 'import_to_require')));
-    if (id === constant_1.SelectIds.lowercase)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toLowerCase)(text)));
-    if (id === constant_1.SelectIds.pascalCase)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toPascalCase)(text)));
-    if (id === constant_1.SelectIds.remove_vietnamese_characters)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.removeVietnameseCharacters)(text)));
-    if (id === constant_1.SelectIds.require_to_import)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.convertImport)(text, 'require_to_import')));
-    if (id === constant_1.SelectIds.to_text)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.variableToString)(text)));
-    if (id === constant_1.SelectIds.underscore)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toSnakeCase)(text)));
-    if (id === constant_1.SelectIds.uppercase)
-        (0, editor_1.insertTextAtSelections)(data.map((text) => (0, text_func_1.toUpperCase)(text)));
-};
-exports.handleSelect = handleSelect;
-
-
-/***/ }),
-/* 4 */
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.insertTextAtSelections = exports.getTextAtSelections = void 0;
-const vscode = __webpack_require__(1);
-//Todo: Hàm lấy text tại tất cả các vị trí con trỏ
-const getTextAtSelections = () => {
-    const editor = vscode.window.activeTextEditor;
-    if (!editor)
-        return null;
-    const selections = editor.selections;
-    // Lấy text trong từng vùng chọn
-    const texts = selections.map((selection) => editor.document.getText(selection));
-    return texts;
-};
-exports.getTextAtSelections = getTextAtSelections;
-//Todo: Hàm chèn text tại tất cả các vị trí con trỏ
-const insertTextAtSelections = (mutils) => {
-    const editor = vscode.window.activeTextEditor;
-    if (!editor) {
-        vscode.window.showErrorMessage('Không có editor nào đang hoạt động!');
-        return;
-    }
-    editor.edit((editBuilder) => {
-        const selections = editor.selections;
-        selections.forEach((selection, index) => {
-            var _a, _b;
-            if (!selection.isEmpty) {
-                editBuilder.replace(selection, (_a = mutils[index]) !== null && _a !== void 0 ? _a : ''); // Thay thế vùng chọn
-            }
-            else {
-                editBuilder.insert(selection.start, (_b = mutils[index]) !== null && _b !== void 0 ? _b : ''); // Chèn text tại vị trí con trỏ
-            }
-        });
-    });
-};
-exports.insertTextAtSelections = insertTextAtSelections;
 
 
 /***/ }),
@@ -46992,7 +46992,7 @@ exports.translateAndInsert = void 0;
 const vs = __webpack_require__(1);
 const dist_1 = __webpack_require__(151);
 const constant_1 = __webpack_require__(152);
-const editor_1 = __webpack_require__(4);
+const editor_1 = __webpack_require__(2);
 // giới hạn 1 api / giây nên phải gộp lại
 const translateAndInsert = () => __awaiter(void 0, void 0, void 0, function* () {
     const data = (0, editor_1.getTextAtSelections)();
@@ -47213,7 +47213,7 @@ var exports = __webpack_exports__;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.deactivate = exports.activate = void 0;
 const vscode = __webpack_require__(1);
-const constant_1 = __webpack_require__(2);
+const constant_1 = __webpack_require__(4);
 const select_func_1 = __webpack_require__(3);
 const translate_func_1 = __webpack_require__(150);
 const activate = (context) => {
