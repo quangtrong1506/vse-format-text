@@ -10,6 +10,9 @@ Support for quickly converting variable writing style, converting text to variab
 
     -   Win: ctrl+alt+F,
     -   mac: shift+cmd+F
+    or
+    -   Win: ctrl+alt+C,
+    -   mac: shift+cmd+C
 
 ##### Translate
 
@@ -23,8 +26,8 @@ Support for quickly converting variable writing style, converting text to variab
 
 ##### Add console.log()
 
-    -   Win: ctrl+L,
-    -   mac: cmd+L
+    -   Win: ctrl+alt+L,
+    -   mac: cmd+alt+L
 
 ## Requirements
 
@@ -41,6 +44,15 @@ Select at least 1 text
 ## Release Notes
 
 New versions
+
+### 2.0.2
+
+    - Fix translation error when selecting multiple lines
+    - Fix convert error when selecting multiple lines
+
+### 2.0.1
+
+    - Fixed bug in menu select
 
 ### 2.0.0
 

@@ -11,9 +11,10 @@ type ItemTranslateType = {
     value: TranslateLanguage;
     label: string;
 };
+// giới hạn 1 api / giây nên phải gộp lại
 export const translateAndInsert = async () => {
     const data = getTextAtSelections();
-    if (!data && data?.[0] === '') return;
+    if (!data) return;
     const sourceLanguageQP = vs.window.createQuickPick();
     sourceLanguageQP.placeholder = 'Select Source Language';
     sourceLanguageQP.items = SOURCE_LANGUAGE;
@@ -28,8 +29,12 @@ export const translateAndInsert = async () => {
         targetLanguageQP.onDidChangeSelection(async (item) => {
             const tl = item[0] as ItemTranslateType;
             targetLanguageQP.dispose();
-            const translatedData = await Translate(data?.[0] ?? '', sl.value, tl.value);
-            if (translatedData.result) insertTextAtSelections(translatedData.result);
+            const textGroup = data.join('<*>');
+            const translatedData = await Translate(textGroup ?? '', sl.value, tl.value);
+            if (translatedData.result) {
+                const textResult = translatedData.result;
+                insertTextAtSelections(textResult.split('<*>'));
+            }
         });
     });
 };

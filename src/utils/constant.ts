@@ -19,6 +19,7 @@ export enum SelectIds {
     html_to_jsx = 'html_to_jsx',
     require_to_import = 'require_to_import',
     import_to_require = 'import_to_require',
+    add_log = 'add_log',
 }
 
 export const SELECTS: SelectType[] = [

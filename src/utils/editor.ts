@@ -11,7 +11,7 @@ export const getTextAtSelections = (): string[] | null => {
 };
 
 //Todo: Hàm chèn text tại tất cả các vị trí con trỏ
-export const insertTextAtSelections = (text: string) => {
+export const insertTextAtSelections = (mutils: string[]) => {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
         vscode.window.showErrorMessage('Không có editor nào đang hoạt động!');
@@ -19,11 +19,11 @@ export const insertTextAtSelections = (text: string) => {
     }
     editor.edit((editBuilder) => {
         const selections = editor.selections;
-        selections.forEach((selection) => {
+        selections.forEach((selection, index) => {
             if (!selection.isEmpty) {
-                editBuilder.replace(selection, text); // Thay thế vùng chọn
+                editBuilder.replace(selection, mutils[index] ?? ''); // Thay thế vùng chọn
             } else {
-                editBuilder.insert(selection.start, text); // Chèn text tại vị trí con trỏ
+                editBuilder.insert(selection.start, mutils[index] ?? ''); // Chèn text tại vị trí con trỏ
             }
         });
     });
