@@ -1,37 +1,80 @@
 {
-    "name": "text-format",
-    "displayName": "Text Format",
-    "description": "Edit text, Edit variable type...",
-    "version": "0.0.1",
+    "name": "text-convert",
+    "displayName": "Convert variable, Translate text",
+    "description": "Convert a string to variable, variable to string, translate text ...",
+    "version": "2.0.0",
+    "icon": "./logo.png",
     "engines": {
         "vscode": "^1.95.0"
     },
     "categories": [
-        "Keymaps",
+        "Programming Languages",
         "Formatters",
         "Other"
     ],
-    "activationEvents": [],
+    "activationEvents": [
+        "quangtrong.vscode.text.open-select",
+        "quangtrong.vscode.text.html-2-jsx",
+        "quangtrong.vscode.text.console-log",
+        "quangtrong.vscode.text.translate"
+    ],
     "main": "./dist/extension.js",
     "contributes": {
         "commands": [
             {
-                "command": "my-extension.helloWorld",
-                "title": "Hello World Command"
+                "command": "quangtrong.vscode.open-select",
+                "title": "Open Format Select"
+            },
+            {
+                "command": "quangtrong.vscode.console-log",
+                "title": "Add console.log"
+            },
+            {
+                "command": "quangtrong.vscode.translate",
+                "title": "Translate"
+            },
+            {
+                "command": "quangtrong.vscode.html-2-jsx",
+                "title": "HTML => JSX"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "quangtrong.vscode.open-select",
+                "key": "ctrl+alt+f",
+                "mac": "shift+cmd+f"
+            },
+            {
+                "command": "quangtrong.vscode.console-log",
+                "key": "ctrl+l",
+                "mac": "cmd+l"
+            },
+            {
+                "command": "quangtrong.vscode.translate",
+                "key": "ctrl+alt+t",
+                "mac": "shift+cmd+t"
+            },
+            {
+                "command": "quangtrong.vscode.html-2-jsx",
+                "key": "ctrl+alt+x",
+                "mac": "shift+cmd+x"
             }
         ]
     },
     "scripts": {
         "vscode:prepublish": "npm run package",
-        "compile": "npm run copy-files && webpack",
+        "compile": "npm run copy-translate-folder && npm run copy-jsx-folder && webpack",
         "watch": "webpack --watch",
         "package": "webpack --mode production --devtool hidden-source-map",
         "lint": "eslint src",
         "test": "vscode-test",
-        "copy-files": "copyfiles -u 1 node_modules/free-google-translate-api-ts/**/* ./dist/"
+        "copy-translate-folder": "copyfiles -u 1 node_modules/free-google-translate-api-ts/**/* ./dist/",
+        "copy-jsx-folder": "copyfiles -u 1 node_modules/html-to-jsx-transform/**/* ./dist/",
+        "publish": "vsce package && vsce publish"
     },
     "dependencies": {
-        "free-google-translate-api-ts": "^1.0.1"
+        "free-google-translate-api-ts": "^1.0.3",
+        "html-to-jsx-transform": "^1.1.0"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.9",
@@ -39,6 +82,7 @@
         "@types/vscode": "^1.95.0",
         "@typescript-eslint/eslint-plugin": "^8.10.0",
         "@typescript-eslint/parser": "^8.7.0",
+        "copyfiles": "^2.4.1",
         "eslint": "^9.13.0",
         "ts-loader": "^9.5.1",
         "typescript": "^5.6.3",

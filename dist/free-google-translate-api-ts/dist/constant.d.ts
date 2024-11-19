@@ -1,12 +1,9 @@
 import { Language } from './type';
 export declare const LANGUAGES: {
-    key: Language;
+    value: Language;
     label: string;
 }[];
-export declare const SOURCE_LANGUAGE: ({
-    key: Language;
-    label: string;
-} | {
+export declare const SOURCE_LANGUAGE: {
     label: string;
     value: string;
-})[];
+}[];
