@@ -11,12 +11,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("./index");
 test('Translate Auto => Vietnamese', () => __awaiter(void 0, void 0, void 0, function* () {
-    const translate = yield (0, index_1.Translate)('Hello', 'auto', 'vi');
+    const translate = yield (0, index_1.Translate)('Hello World!', 'auto', 'fr');
     console.log(translate);
 }));
-test('Translate English => Vietnamese', () => {
-    expect(() => __awaiter(void 0, void 0, void 0, function* () {
-        const translate = yield (0, index_1.Translate)('Hello', 'en', 'vi');
-        console.log(translate);
-    }));
-});

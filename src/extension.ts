@@ -4,6 +4,7 @@ import { handleSelect, openSelect } from './utils/select.func';
 import { translateAndInsert } from './utils/translate.func';
 
 export const activate = (context: vscode.ExtensionContext) => {
+    const a = 1;
     let select = vscode.commands.registerCommand('quangtrong.vscode.open-select', () => {
         console.log('Open selecte');
         openSelect();

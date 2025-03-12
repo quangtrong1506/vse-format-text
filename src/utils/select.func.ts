@@ -10,6 +10,7 @@ import {
     toCapitalized,
     toConstantCase,
     toJSX,
+    toKebabCase,
     toLowerCase,
     toPascalCase,
     toSnakeCase,
@@ -34,7 +35,7 @@ export const handleSelect = (id: string) => {
     if (id === SelectIds.camelcase) insertTextAtSelections(data.map((text) => toCamelCase(text)));
     if (id === SelectIds.capitalize) insertTextAtSelections(data.map((text) => toCapitalized(text)));
     if (id === SelectIds.clear_double_whitespace) insertTextAtSelections(data.map((text) => cleanWhiteSpace(text)));
-    if (id === SelectIds.dash) insertTextAtSelections(data.map((text) => cleanWhiteSpace(text)));
+    if (id === SelectIds.dash) insertTextAtSelections(data.map((text) => toKebabCase(text)));
     if (id === SelectIds.constant) insertTextAtSelections(data.map((text) => toConstantCase(text)));
     if (id === SelectIds.html_to_jsx) insertTextAtSelections(data.map((text) => toJSX(text)));
     if (id === SelectIds.import_to_require)

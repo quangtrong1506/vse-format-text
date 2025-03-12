@@ -1,12 +1,12 @@
 {
     "name": "free-google-translate-api-ts",
-    "version": "1.0.3",
+    "version": "1.0.5",
     "description": "Free google translate api library",
     "main": "index.js",
     "scripts": {
         "build": "tsc",
         "test": "jest",
-        "publish": "tsc && publish"
+        "publish": "tsc && npm publish"
     },
     "keywords": [
         "translate",

@@ -2,7 +2,7 @@
     "name": "text-convert",
     "displayName": "Convert variable, Translate text",
     "description": "Convert a string to variable, variable to string, translate text ...",
-    "version": "2.0.2",
+    "version": "2.0.4",
     "icon": "logo.png",
     "engines": {
         "vscode": "^1.95.0"
@@ -78,7 +78,7 @@
         "publish": "npm run compile && vsce package && vsce publish"
     },
     "dependencies": {
-        "free-google-translate-api-ts": "^1.0.3",
+        "free-google-translate-api-ts": "^1.0.5",
         "html-to-jsx-transform": "^1.1.0"
     },
     "devDependencies": {

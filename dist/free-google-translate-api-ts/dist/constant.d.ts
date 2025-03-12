@@ -1,9 +1,7 @@
 import { Language } from './type';
-export declare const LANGUAGES: {
-    value: Language;
+export interface LanguageItem {
     label: string;
-}[];
-export declare const SOURCE_LANGUAGE: {
-    label: string;
-    value: string;
-}[];
+    value: Language | 'auto';
+}
+export declare const LANGUAGES: LanguageItem[];
+export declare const SOURCE_LANGUAGE: LanguageItem[];

@@ -15,8 +15,8 @@ const Translate = (text, sourceLanguage, translateLanguage) => __awaiter(void 0,
     const result = {
         text,
         result: '',
-        sourceLanguage: sourceLanguage,
-        translateLanguage: translateLanguage,
+        source_language: sourceLanguage,
+        translate_language: translateLanguage,
     };
     try {
         const res = yield fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${translateLanguage}&dt=t&q=${text}`, {
@@ -26,6 +26,7 @@ const Translate = (text, sourceLanguage, translateLanguage) => __awaiter(void 0,
         if (res.ok) {
             const data = yield res.json();
             result.result = ((_b = (_a = data === null || data === void 0 ? void 0 : data[0]) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b[0]) || '';
+            result.source_language = data === null || data === void 0 ? void 0 : data[2];
         }
         return result;
     }
